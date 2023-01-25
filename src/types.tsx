@@ -1,8 +1,12 @@
+export const TODO_DONE = 'Done'
+export const TODO_UNDONE = 'unDone'
+
 export type TodoType = {
     task: string;
     date: string;
     branch: string
-    id: string
+    id: string,
+    status: string
 }
 
 export type TodosArr = TodoType[]

@@ -1,44 +1,49 @@
+import { connect } from "react-redux"
 import React, { useState } from "react"
-import { addBranchType, addToDoType, BranchArr, TodosArr } from "../../types"
 import Branch from "../branch/branch"
 import './branchHolder.css'
+import { createBranch, deleteBranch } from "../../redux/actions/actionBranches"
+import { useInputChange } from "../../redux/customHooks/useInputChange"
 
 interface BranchHolderProps {
-    todos: TodosArr,
-    branches: BranchArr,
-    addToDo: addToDoType,
-    addBranch: addBranchType
 }
 
-function BranchHolder(props: BranchHolderProps) {
-    const [userInput, setInput] = useState('')
-
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setInput(event.currentTarget.value)
-    }
+function BranchHolder(props: any) {
+    const inputBranch = useInputChange('')
 
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
-        if (userInput.trim().length !== 0) {
-            props.addBranch({
-                branchName: userInput,
+        if (inputBranch.value.trim().length !== 0) {
+            props.createBranch({
+                branchName: inputBranch.value,
                 branchCode: Math.random().toString(36).slice(2, 9)
             })
-            setInput('')
+            inputBranch.setValue('')
         }
     }
 
     return (
         <div className="branchHolder">
-            {props.branches.map((branch) => {
-                return <Branch key={branch.branchCode} branch={branch} todos={props.todos} addToDo={props.addToDo} />
+            {props.branches.map((branch: any) => {
+                return <Branch key={branch.branchCode} branch={branch} deleteBranch={props.deleteBranch} />
             })}
             <form onSubmit={handleSubmit}>
-                <input type='text' placeholder="New Branch" onChange={handleChange} value={userInput} />
+                <input type='text' placeholder="New Branch" onChange={inputBranch.onChange} value={inputBranch.value} />
                 <button>Add</button>
             </form>
         </div>
     )
 }
 
-export default BranchHolder
+const mapDispatchToProps = {
+    createBranch,
+    deleteBranch
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+        branches: state.branches
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BranchHolder)
