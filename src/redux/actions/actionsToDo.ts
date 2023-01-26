@@ -1,5 +1,5 @@
 import { TodoType } from "../../types";
-import { CREATE_TODO, DELETE_TODO, DONE_TODO } from "../types";
+import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types";
 
 export function createTodo(todo: TodoType) {
     return {
@@ -17,7 +17,7 @@ export function deleteTodo(id: string) {
 
 export function doneTodo(todo: TodoType) {
     return {
-        type: DONE_TODO,
+        type: CHANGE_STATUS_TODO,
         payload: todo
     }
 }

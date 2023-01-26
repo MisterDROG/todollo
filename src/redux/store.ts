@@ -8,5 +8,5 @@ export const storeTodollo = configureStore({
     reducer: {
         todos: todosReducer,
         branches: branchReducer
-    }
+    },
 })
