@@ -2,6 +2,7 @@ import React, { useMemo } from "react"
 import { connect } from "react-redux"
 import { createTodo, deleteTodo, doneTodo } from "../../redux/actions/actionsToDo"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
+import { todoSlice } from "../../redux/reducers/todosReducer"
 import { BranchType, TodosArr, TODO_UNDONE } from "../../types"
 import Card from "../card/card"
 import './branch.css'
@@ -55,9 +56,9 @@ function Branch(props: any) {
 }
 
 const mapDispatchToProps = {
-    createTodo: createTodo,
-    deleteTodo: deleteTodo,
-    doneTodo: doneTodo
+    createTodo: todoSlice.actions.createTodo,
+    deleteTodo: todoSlice.actions.deleteTodo,
+    doneTodo: todoSlice.actions.doneTodo
 }
 
 const mapStateToProps = (state: any) => {

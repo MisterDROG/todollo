@@ -4,6 +4,7 @@ import Branch from "../branch/branch"
 import './branchHolder.css'
 import { createBranch, deleteBranch } from "../../redux/actions/actionBranches"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
+import { branchSlice } from "../../redux/reducers/branchesReducer"
 
 interface BranchHolderProps {
 }
@@ -36,8 +37,8 @@ function BranchHolder(props: any) {
 }
 
 const mapDispatchToProps = {
-    createBranch,
-    deleteBranch
+    createBranch: branchSlice.actions.createBranch,
+    deleteBranch: branchSlice.actions.deleteBranch
 }
 
 const mapStateToProps = (state: any) => {

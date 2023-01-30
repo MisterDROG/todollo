@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { branchReducer } from "./reducers/branchesReducer";
-import { todosReducer } from "./reducers/todosReducer";
+import { branchSlice } from "./reducers/branchesReducer";
+import { todoSlice } from "./reducers/todosReducer";
 
 
 
 export const storeTodollo = configureStore({
     reducer: {
-        todos: todosReducer,
-        branches: branchReducer
+        todos: todoSlice.reducer,
+        branches: branchSlice.reducer
     }
 })
