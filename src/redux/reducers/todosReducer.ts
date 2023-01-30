@@ -1,16 +1,35 @@
+import { createReducer } from "@reduxjs/toolkit"
 import { TodosArr, TODO_DONE, TODO_UNDONE } from "../../types"
+import { createTodo, deleteTodo, doneTodo } from "../actions/actionsToDo"
 import { initialTodos } from "../initialStates"
 import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types"
 
+// export const todosReducer1 = (state: TodosArr = initialTodos, action: any) => {
+//   console.log(action.type, action.payload)
+//   switch (action.type) {
+//     case CREATE_TODO:
+//       return [...state, action.payload]
+//     case DELETE_TODO:
+//       return state.filter((todo) => todo.id !== action.payload)
+//     case CHANGE_STATUS_TODO:
+//       return state.map((todo) => {
+//         if (todo.id == action.payload) {
+//           switch (todo.status) {
+//             case TODO_DONE: return { ...todo, status: TODO_UNDONE }
+//             case TODO_UNDONE: return { ...todo, status: TODO_DONE }
+//           }
+//         }
+//         return todo
+//       })
+//     default: return state
+//   }
+// }
 
-
-export const todosReducer = (state: TodosArr = initialTodos, action: any) => {
-  switch (action.type) {
-    case CREATE_TODO:
-      return [...state, action.payload]
-    case DELETE_TODO:
-      return state.filter((todo) => todo.id !== action.payload)
-    case CHANGE_STATUS_TODO:
+export const todosReducer = createReducer(initialTodos, (builder) => {
+  builder
+    .addCase(createTodo, (state, action) => [...state, action.payload])
+    .addCase(deleteTodo, (state, action) => state.filter((todo) => todo.id !== action.payload))
+    .addCase(doneTodo, (state, action) => {
       return state.map((todo) => {
         if (todo.id == action.payload) {
           switch (todo.status) {
@@ -20,6 +39,6 @@ export const todosReducer = (state: TodosArr = initialTodos, action: any) => {
         }
         return todo
       })
-    default: return state
-  }
-}
+    })
+    .addDefaultCase((state, action) => state)
+})

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import { connect } from "react-redux"
 import { createTodo, deleteTodo, doneTodo } from "../../redux/actions/actionsToDo"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
