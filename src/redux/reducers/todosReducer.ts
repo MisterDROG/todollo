@@ -1,5 +1,5 @@
-import { createReducer, createSlice, current } from "@reduxjs/toolkit"
-import { TodosArr, TODO_DONE, TODO_UNDONE } from "../../types"
+import { createReducer, createSlice, current, PayloadAction } from "@reduxjs/toolkit"
+import { TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { createTodo, deleteTodo, doneTodo } from "../actions/actionsToDo"
 import { initialTodos } from "../initialStates"
 import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types"
@@ -47,22 +47,22 @@ export const todoSlice = createSlice({
   name: 'todoSlice',
   initialState: initialTodos,
   reducers: {
-    createTodo(state, action) {
+    createTodo(state, action: PayloadAction<TodoType>) {
       state.push(action.payload)
     },
-    deleteTodo(state, action) {
+    deleteTodo(state, action: PayloadAction<string>) {
       state.splice(state.indexOf((state.filter((todo) => todo.id === action.payload))[0]), 1)
     },
-    doneTodo(state, action) {
-      switch (state[state.indexOf((state.filter((todo) => todo.id === action.payload))[0])].status) {
+    doneTodo(state, action: PayloadAction<string>) {
+      const toggleTodo = state[state.indexOf((state.filter((todo) => todo.id === action.payload))[0])]
+      switch (toggleTodo.status) {
         case TODO_UNDONE:
-          state[state.indexOf((state.filter((todo) => todo.id === action.payload))[0])].status = TODO_DONE
+          toggleTodo.status = TODO_DONE
           break
         case TODO_DONE:
-          state[state.indexOf((state.filter((todo) => todo.id === action.payload))[0])].status = TODO_UNDONE;
+          toggleTodo.status = TODO_UNDONE;
           break
       }
-      return state
     }
   }
 })

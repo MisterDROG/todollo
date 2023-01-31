@@ -1,4 +1,4 @@
-import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
+import { createAction, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BranchArr, BranchType } from "../../types";
 import { createBranch, deleteBranch } from "../actions/actionBranches";
 import { initialBranches } from "../initialStates";
@@ -25,10 +25,10 @@ export const branchSlice = createSlice({
     name: 'branchSlice',
     initialState: initialBranches,
     reducers: {
-        createBranch(state, action) {
+        createBranch(state, action: PayloadAction<BranchType>) {
             state.push(action.payload)
         },
-        deleteBranch(state, action) {
+        deleteBranch(state, action: PayloadAction<string>) {
             state.splice(state.indexOf((state.filter((branch) => branch.branchCode === action.payload))[0]), 1)
         }
     }

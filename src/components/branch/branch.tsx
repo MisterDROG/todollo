@@ -1,28 +1,27 @@
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 import React, { useMemo } from "react"
-import { connect } from "react-redux"
-import { createTodo, deleteTodo, doneTodo } from "../../redux/actions/actionsToDo"
+import { connect, ConnectedProps } from "react-redux"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
 import { todoSlice } from "../../redux/reducers/todosReducer"
-import { BranchType, TodosArr, TODO_UNDONE } from "../../types"
+import { BranchType, RootState, TODO_UNDONE } from "../../types"
 import Card from "../card/card"
 import './branch.css'
 
-interface BranchProps {
+interface BranchProps extends PropsFromRedux {
     branch: BranchType,
-    todos: TodosArr,
-    // addToDo: addToDoType
+    deleteBranch: ActionCreatorWithPayload<string, "branchSlice/deleteBranch">
 }
 
 
-function Branch(props: any) {
+function Branch(props: BranchProps) {
     const inputTodo = useInputChange('')
 
     const filteredTodos = useMemo(() => {
-        return props.todos.filter((todo: any) => todo.branch == props.branch.branchCode)
+        return props.todos.filter((todo) => todo.branch == props.branch.branchCode)
     }, [props.todos])
 
     function handleDelete() {
-        filteredTodos.forEach((todo: any) => props.deleteTodo(todo.id))
+        filteredTodos.forEach((todo) => props.deleteTodo(todo.id))
         props.deleteBranch(props.branch.branchCode)
     }
 
@@ -44,7 +43,7 @@ function Branch(props: any) {
         <div className="branch">
             <p className="branch_name">{props.branch.branchName}</p>
             <button onClick={handleDelete}>Delete</button>
-            {filteredTodos && filteredTodos.map((todo: any) => {
+            {filteredTodos && filteredTodos.map((todo) => {
                 return <Card todo={todo} key={todo.id} deleteTodo={props.deleteTodo} doneTodo={props.doneTodo} />
             })}
             <form onSubmit={handleSubmit}>
@@ -61,11 +60,14 @@ const mapDispatchToProps = {
     doneTodo: todoSlice.actions.doneTodo
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
     return {
         todos: state.todos
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Branch)
-// export default Branch
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(Branch)

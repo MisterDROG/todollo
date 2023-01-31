@@ -1,11 +1,14 @@
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { TodoType } from '../../types'
 import './card.css'
 
 interface CardProps {
-    todo: TodoType
+    todo: TodoType,
+    deleteTodo: ActionCreatorWithPayload<string, "todoSlice/deleteTodo">,
+    doneTodo: ActionCreatorWithPayload<string, "todoSlice/doneTodo">
 }
 
-function Card(props: any) {
+function Card(props: CardProps) {
 
     function deleteHandler() {
         props.deleteTodo(props.todo.id)
