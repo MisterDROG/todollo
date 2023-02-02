@@ -29,7 +29,7 @@ export const branchSlice = createSlice({
             state.push(action.payload)
         },
         deleteBranch(state, action: PayloadAction<string>) {
-            state.splice(state.indexOf((state.filter((branch) => branch.branchCode === action.payload))[0]), 1)
+            state.splice(state.findIndex(((branch) => branch.branchCode === action.payload)), 1)
         }
     }
 })

@@ -51,10 +51,10 @@ export const todoSlice = createSlice({
       state.push(action.payload)
     },
     deleteTodo(state, action: PayloadAction<string>) {
-      state.splice(state.indexOf((state.filter((todo) => todo.id === action.payload))[0]), 1)
+      state.splice(state.findIndex((todo) => todo.id === action.payload), 1)
     },
     doneTodo(state, action: PayloadAction<string>) {
-      const toggleTodo = state[state.indexOf((state.filter((todo) => todo.id === action.payload))[0])]
+      const toggleTodo = state[state.findIndex((todo) => todo.id === action.payload)]
       switch (toggleTodo.status) {
         case TODO_UNDONE:
           toggleTodo.status = TODO_DONE
