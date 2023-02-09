@@ -1,21 +1,23 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
+import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
+import { useAppDispatch } from '../../redux/store'
 import { TodoType } from '../../types'
 import './card.css'
 
 interface CardProps {
     todo: TodoType,
-    deleteTodo: ActionCreatorWithPayload<string, "todoSlice/deleteTodo">,
-    doneTodo: ActionCreatorWithPayload<string, "todoSlice/doneTodo">
 }
 
 function Card(props: CardProps) {
 
+    const dispatch = useAppDispatch()
+
     function deleteHandler() {
-        props.deleteTodo(props.todo.id)
+        dispatch(deleteTodoThunk(props.todo.id))
     }
 
     function doneHandler() {
-        props.doneTodo(props.todo.id)
+        dispatch(doneTodoThunk(props.todo.id))
     }
 
     return (

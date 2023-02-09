@@ -1,6 +1,5 @@
 import { createReducer, createSlice, current, PayloadAction } from "@reduxjs/toolkit"
 import { TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
-import { createTodo, deleteTodo, doneTodo } from "../actions/actionsToDo"
 import { initialTodos } from "../initialStates"
 import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types"
 
@@ -47,6 +46,9 @@ export const todoSlice = createSlice({
   name: 'todoSlice',
   initialState: initialTodos,
   reducers: {
+    getAllTodos(state, action: PayloadAction<TodosArr>) {
+      return action.payload
+    },
     createTodo(state, action: PayloadAction<TodoType>) {
       state.push(action.payload)
     },
@@ -66,3 +68,5 @@ export const todoSlice = createSlice({
     }
   }
 })
+
+export const { getAllTodos, createTodo, deleteTodo, doneTodo } = todoSlice.actions

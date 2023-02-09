@@ -1,0 +1,81 @@
+{
+    "todos": [
+        {
+            "task": "Wash floor",
+            "date": "01.02.22",
+            "branch": "house",
+            "id": "1",
+            "status": "unDone"
+        },
+        {
+            "task": "Cook food",
+            "date": "15.05.22",
+            "branch": "house",
+            "id": "2",
+            "status": "unDone"
+        },
+        {
+            "task": "Buy dishes",
+            "date": "23.09.22",
+            "branch": "house",
+            "id": "3",
+            "status": "unDone"
+        },
+        {
+            "task": "Write program",
+            "date": "11.03.22",
+            "branch": "work",
+            "id": "4",
+            "status": "unDone"
+        },
+        {
+            "task": "Work with Excel",
+            "date": "16.04.22",
+            "branch": "work",
+            "id": "5",
+            "status": "unDone"
+        },
+        {
+            "task": "Send emails",
+            "date": "07.05.22",
+            "branch": "work",
+            "id": "6",
+            "status": "unDone"
+        },
+        {
+            "task": "Do squads",
+            "date": "06.04.22",
+            "branch": "sport",
+            "id": "7",
+            "status": "unDone"
+        },
+        {
+            "task": "Play basketball",
+            "date": "22.11.22",
+            "branch": "sport",
+            "id": "8",
+            "status": "unDone"
+        },
+        {
+            "task": "Upgrade bike",
+            "date": "17.12.22",
+            "branch": "sport",
+            "id": "9",
+            "status": "unDone"
+        }
+    ],
+    "branches": [
+        {
+            "branchName": "House",
+            "branchCode": "house"
+        },
+        {
+            "branchName": "Work",
+            "branchCode": "work"
+        },
+        {
+            "branchName": "Sport",
+            "branchCode": "sport"
+        }
+    ]
+}

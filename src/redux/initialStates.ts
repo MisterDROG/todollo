@@ -17,3 +17,4 @@ export const initialBranches: BranchArr = [
     { branchName: 'work', branchCode: 'work' },
     { branchName: 'sport', branchCode: 'sport' },
 ]
+
