@@ -18,6 +18,3 @@ export const storeTodollo = configureStore({
         }
     }).concat(loggerMiddleware)
 })
-
-export type AppDispatch = typeof storeTodollo.dispatch
-export const useAppDispatch: () => AppDispatch = useDispatch

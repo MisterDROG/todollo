@@ -1,3 +1,4 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { storeTodollo } from "./redux/store";
 
 export const TODO_DONE = 'Done'
@@ -24,6 +25,12 @@ export type addToDoType = (input: TodoType) => void
 
 export type addBranchType = (input: BranchType) => void
 
+export type GetStateType = typeof storeTodollo.getState
+
 export type RootState = ReturnType<typeof storeTodollo.getState>
 
 export type AppDispatch = typeof storeTodollo.dispatch
+
+export const useAppDispatch: () => AppDispatch = useDispatch
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

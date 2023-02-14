@@ -1,19 +1,17 @@
-import { connect, ConnectedProps } from "react-redux"
 import React, { useEffect } from "react"
 import Branch from "../branch/branch"
 import './branchHolder.css'
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { branchSlice } from "../../redux/reducers/branchesReducer"
-import { RootState } from "../../types"
-import { useAppDispatch } from "../../redux/store"
+import { useAppDispatch, useAppSelector } from "../../types"
 import { createBranchThunk, getBranchesThunk, getPostsThunk } from "../../redux/middlewares/thunks"
 
-interface BranchHolderProps extends PropsFromRedux {
+interface BranchHolderProps {
 }
 
 function BranchHolder(props: BranchHolderProps) {
 
     const inputBranch = useInputChange('')
+    const stateBranches = useAppSelector((state) => state.branches)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -35,7 +33,7 @@ function BranchHolder(props: BranchHolderProps) {
 
     return (
         <div className="branchHolder">
-            {props.branches.map((branch) => {
+            {stateBranches.map((branch) => {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
             <form onSubmit={handleSubmit}>
@@ -46,19 +44,4 @@ function BranchHolder(props: BranchHolderProps) {
     )
 }
 
-const mapDispatchToProps = {
-    createBranch: branchSlice.actions.createBranch,
-    deleteBranch: branchSlice.actions.deleteBranch
-}
-
-const mapStateToProps = (state: RootState) => {
-    return {
-        branches: state.branches
-    }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-export default connector(BranchHolder)
+export default BranchHolder

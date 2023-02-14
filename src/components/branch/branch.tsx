@@ -1,29 +1,25 @@
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 import React, { useMemo } from "react"
-import { connect, ConnectedProps } from "react-redux"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { createTodoThunk, deleteBranchThunk, getPostsThunk } from "../../redux/middlewares/thunks"
-import { todoSlice } from "../../redux/reducers/todosReducer"
-import { useAppDispatch } from "../../redux/store"
-import { BranchType, RootState, TODO_UNDONE } from "../../types"
+import { createTodoThunk, deleteBranchThunk, deleteTodoThunk, getPostsThunk } from "../../redux/middlewares/thunks"
+import { BranchType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
 import Card from "../card/card"
 import './branch.css'
 
-interface BranchProps extends PropsFromRedux {
+interface BranchProps {
     branch: BranchType,
 }
 
-
 function Branch(props: BranchProps) {
     const inputTodo = useInputChange('')
+    const stateTodos = useAppSelector((state) => state.todos)
     const dispatch = useAppDispatch()
 
     const filteredTodos = useMemo(() => {
-        return props.todos.filter((todo) => todo.branch == props.branch.branchCode)
-    }, [props.todos])
+        return stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
+    }, [stateTodos])
 
     function handleDelete() {
-        filteredTodos.forEach((todo) => props.deleteTodo(todo.id))
+        filteredTodos.forEach((todo) => dispatch(deleteTodoThunk(todo.id)))
         dispatch(deleteBranchThunk(props.branch.branchCode))
     }
 
@@ -57,20 +53,5 @@ function Branch(props: BranchProps) {
     )
 }
 
-const mapDispatchToProps = {
-    createTodo: todoSlice.actions.createTodo,
-    deleteTodo: todoSlice.actions.deleteTodo,
-    doneTodo: todoSlice.actions.doneTodo
-}
 
-const mapStateToProps = (state: RootState) => {
-    return {
-        todos: state.todos
-    }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-export default connector(Branch)
+export default Branch

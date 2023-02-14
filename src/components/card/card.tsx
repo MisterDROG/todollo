@@ -1,7 +1,5 @@
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
-import { useAppDispatch } from '../../redux/store'
-import { TodoType } from '../../types'
+import { TodoType, useAppDispatch } from '../../types'
 import './card.css'
 
 interface CardProps {
