@@ -1,4 +1,4 @@
-import { BranchArr, TodosArr } from "../types";
+import { AppStatus, BranchArr, TodosArr } from "../types";
 
 export const initialTodos: TodosArr = [
     { task: 'clean floor', date: '01.02.22', branch: 'house', id: '1', status: 'unDone' },
@@ -17,4 +17,9 @@ export const initialBranches: BranchArr = [
     { branchName: 'work', branchCode: 'work' },
     { branchName: 'sport', branchCode: 'sport' },
 ]
+
+export const initialAppStatus: AppStatus = {
+    status: null,
+    error: null
+}
 

@@ -1,6 +1,7 @@
 import { createReducer, createSlice, current, PayloadAction } from "@reduxjs/toolkit"
 import { TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { initialTodos } from "../initialStates"
+import { getPostsThunk } from "../middlewares/thunks"
 import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types"
 
 // export const todosReducer = (state: TodosArr = initialTodos, action: any) => {
@@ -66,6 +67,18 @@ export const todoSlice = createSlice({
           break
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPostsThunk.pending, (state, action) => {
+
+      })
+      .addCase(getPostsThunk.fulfilled, (state, action) => {
+        state = action.payload
+      })
+      .addCase(getPostsThunk.rejected, (state, action) => {
+
+      })
   }
 })
 

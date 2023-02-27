@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 import APItodollo from "../utils/APItodollo";
 import { loggerMiddleware } from "./middlewares/logger";
 import { branchSlice } from "./reducers/branchesReducer";

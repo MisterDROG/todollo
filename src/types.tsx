@@ -21,6 +21,11 @@ export type BranchType = {
 
 export type BranchArr = BranchType[]
 
+export type AppStatus = {
+    status: null | string
+    error: null | string
+}
+
 export type addToDoType = (input: TodoType) => void
 
 export type addBranchType = (input: BranchType) => void
