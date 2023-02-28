@@ -4,9 +4,6 @@ async function getData(url: string) {
     const response = await fetch(url, {
         method: 'GET'
     })
-    if (!response.ok) {
-        return 'error'
-    }
     const responseJSON = await response.json()
     let result = Object.keys(responseJSON).map(key => {
         return { ...responseJSON[key], id: key }

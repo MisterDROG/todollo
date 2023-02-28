@@ -1,6 +1,7 @@
 import { createAction, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BranchArr, BranchType } from "../../types";
 import { initialBranches } from "../initialStates";
+import { getBranchesThunk } from "../middlewares/thunks";
 import { CREATE_BRANCH, DELETE_BRANCH } from "../types";
 
 // export function branchReducer(state: BranchArr = initialBranches, action: any) {
@@ -33,6 +34,12 @@ export const branchSlice = createSlice({
         deleteBranch(state, action: PayloadAction<string>) {
             state.splice(state.findIndex(((branch) => branch.branchCode === action.payload)), 1)
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getBranchesThunk.fulfilled, (state, action: PayloadAction<BranchArr>) => {
+                state = action.payload
+            })
     }
 })
 

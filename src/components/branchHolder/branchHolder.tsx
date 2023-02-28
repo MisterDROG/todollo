@@ -12,6 +12,7 @@ function BranchHolder(props: BranchHolderProps) {
 
     const inputBranch = useInputChange('')
     const stateBranches = useAppSelector((state) => state.branches)
+    const stateAppStatus = useAppSelector((state) => state.appStatus)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -33,6 +34,8 @@ function BranchHolder(props: BranchHolderProps) {
 
     return (
         <div className="branchHolder">
+            {(stateAppStatus.status == 'Loading...') && <h1>{stateAppStatus.status}</h1>}
+            {stateAppStatus.error && <h1>{stateAppStatus.error}</h1>}
             {stateBranches.map((branch) => {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}

@@ -70,14 +70,8 @@ export const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPostsThunk.pending, (state, action) => {
-
-      })
-      .addCase(getPostsThunk.fulfilled, (state, action) => {
+      .addCase(getPostsThunk.fulfilled, (state, action: PayloadAction<TodosArr>) => {
         state = action.payload
-      })
-      .addCase(getPostsThunk.rejected, (state, action) => {
-
       })
   }
 })

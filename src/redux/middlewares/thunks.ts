@@ -1,36 +1,39 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { AppDispatch, BranchType, GetStateType, TodoType } from "../../types"
+import { APItodolloType, AppDispatch, BranchArr, BranchType, GetStateType, TodosArr, TodoType } from "../../types"
 import { createBranch, deleteBranch, getAllBranches } from "../reducers/branchesReducer"
 import { createTodo, deleteTodo, doneTodo, getAllTodos } from "../reducers/todosReducer"
 
 
-export const getPostsThunk = createAsyncThunk(
+export const getPostsThunk = createAsyncThunk<
+    TodosArr,
+    void,
+    {
+        extra: { APItodollo: APItodolloType },
+        rejectValue: string
+    }
+>(
     'posts/getPosts',
-    async (_, { dispatch, extra, rejectWithValue }) => {
-        const { APItodollo } = extra as any
+    async (_, { extra, rejectWithValue }) => {
+        const { APItodollo } = extra
         try {
             const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/todos.json')
-            if (response == 'error') {
-                throw new Error('Error while getting')
-            }
-            return response
+            return response as TodosArr
         } catch (error: any) {
             return rejectWithValue(error.message)
         }
-
     }
 )
 
-export function getPostsThunk0() {
-    return async (dispatch: AppDispatch, extraArgument: any) => {
-        const { APItodollo } = extraArgument
-        const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/todos.json')
-        dispatch(getAllTodos(response))
-    }
-}
+// export function getPostsThunk() {
+//     return async (dispatch: AppDispatch, extraArgument: any) => {
+//         const { APItodollo } = extraArgument
+//         const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/todos.json')
+//         dispatch(getAllTodos(response))
+//     }
+// }
 
 export function createTodoThunk(payload: TodoType) {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(createTodo(payload))
         const state = getState().todos
@@ -39,7 +42,7 @@ export function createTodoThunk(payload: TodoType) {
 }
 
 export function deleteTodoThunk(payload: string) {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(deleteTodo(payload))
         const state = getState().todos
@@ -48,7 +51,7 @@ export function deleteTodoThunk(payload: string) {
 }
 
 export function doneTodoThunk(payload: string) {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(doneTodo(payload))
         const state = getState().todos
@@ -56,16 +59,36 @@ export function doneTodoThunk(payload: string) {
     }
 }
 
-export function getBranchesThunk() {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
-        const { APItodollo } = extraArgument
-        const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/branches.json')
-        dispatch(getAllBranches(response))
+export const getBranchesThunk = createAsyncThunk<
+    BranchArr,
+    void,
+    {
+        extra: { APItodollo: APItodolloType },
+        rejectValue: string
     }
-}
+>(
+    'posts/getBranches',
+    async (_, { extra, rejectWithValue }) => {
+        const { APItodollo } = extra
+        try {
+            const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/branches.json')
+            return response as BranchArr
+        } catch (error: any) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
+// export function getBranchesThunk() {
+//     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+//         const { APItodollo } = extraArgument
+//         const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/branches.json')
+//         dispatch(getAllBranches(response))
+//     }
+// }
 
 export function createBranchThunk(payload: BranchType) {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(createBranch(payload))
         const state = getState().branches
@@ -74,7 +97,7 @@ export function createBranchThunk(payload: BranchType) {
 }
 
 export function deleteBranchThunk(payload: string) {
-    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: any) => {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(deleteBranch(payload))
         const state = getState().branches
