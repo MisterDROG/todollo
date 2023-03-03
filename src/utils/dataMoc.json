@@ -1,81 +1,81 @@
 {
+    "branches": {
+        "+house": {
+            "branchCode": "+house",
+            "branchName": "House"
+        },
+        "+work": {
+            "branchCode": "+work",
+            "branchName": "Work"
+        },
+        "+sport": {
+            "branchCode": "+sport",
+            "branchName": "Sport"
+        }
+    },
     "todos": [
         {
-            "task": "Wash floor",
+            "branch": "+house",
             "date": "01.02.22",
-            "branch": "house",
             "id": "1",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Wash floor"
         },
         {
-            "task": "Cook food",
+            "branch": "+house",
             "date": "15.05.22",
-            "branch": "house",
             "id": "2",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Cook food"
         },
         {
-            "task": "Buy dishes",
+            "branch": "+house",
             "date": "23.09.22",
-            "branch": "house",
             "id": "3",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Buy dishes"
         },
         {
-            "task": "Write program",
+            "branch": "+work",
             "date": "11.03.22",
-            "branch": "work",
             "id": "4",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Write program"
         },
         {
-            "task": "Work with Excel",
+            "branch": "+work",
             "date": "16.04.22",
-            "branch": "work",
             "id": "5",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Work with Excel"
         },
         {
-            "task": "Send emails",
+            "branch": "+work",
             "date": "07.05.22",
-            "branch": "work",
             "id": "6",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Send emails"
         },
         {
-            "task": "Do squads",
+            "branch": "+sport",
             "date": "06.04.22",
-            "branch": "sport",
             "id": "7",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Do squads"
         },
         {
-            "task": "Play basketball",
+            "branch": "+sport",
             "date": "22.11.22",
-            "branch": "sport",
             "id": "8",
-            "status": "unDone"
+            "status": "unDone",
+            "task": "Play basketball"
         },
         {
-            "task": "Upgrade bike",
+            "branch": "+sport",
             "date": "17.12.22",
-            "branch": "sport",
             "id": "9",
-            "status": "unDone"
-        }
-    ],
-    "branches": [
-        {
-            "branchName": "House",
-            "branchCode": "house"
-        },
-        {
-            "branchName": "Work",
-            "branchCode": "work"
-        },
-        {
-            "branchName": "Sport",
-            "branchCode": "sport"
+            "status": "unDone",
+            "task": "Upgrade bike"
         }
     ]
 }

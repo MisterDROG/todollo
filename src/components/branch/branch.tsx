@@ -1,6 +1,7 @@
 import React, { useMemo } from "react"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { createTodoThunk, deleteBranchThunk, deleteTodoThunk, getPostsThunk } from "../../redux/middlewares/thunks"
+import { createTodoThunk, deleteTodoThunk, getPostsThunk } from "../../redux/middlewares/thunks"
+import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
 import { BranchType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
 import Card from "../card/card"
 import './branch.css'
@@ -13,6 +14,7 @@ function Branch(props: BranchProps) {
     const inputTodo = useInputChange('')
     const stateTodos = useAppSelector((state) => state.todos)
     const dispatch = useAppDispatch()
+    const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
 
     const filteredTodos = useMemo(() => {
         return stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
@@ -20,7 +22,7 @@ function Branch(props: BranchProps) {
 
     function handleDelete() {
         filteredTodos.forEach((todo) => dispatch(deleteTodoThunk(todo.id)))
-        dispatch(deleteBranchThunk(props.branch.branchCode))
+        deleteBranchRTK(props.branch.branchCode)
     }
 
     function handleSubmit(event: React.FormEvent) {
