@@ -1,6 +1,46 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BranchArr, BranchType } from "../../types";
 
+export const branchApi = createApi({
+    reducerPath: 'branchApi',
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://todollo-default-rtdb.firebaseio.com/' }),
+    tagTypes: ['Branches'],
+    endpoints: (builder) => ({
+        getBranchesRTK: builder.query<BranchArr, void>({
+            query: () => 'branches.json',
+            transformResponse: (response: any) => Object.keys(response).map((key) => {
+                return { branchCode: key, branchName: response[key].branchName }
+            }),
+            providesTags: (result) => result
+                ?
+                [
+                    ...result.map(({ branchCode }) => ({ type: 'Branches', id: branchCode } as const)),
+                    { type: 'Branches', id: 'LIST' },
+                ]
+                :
+                [{ type: 'Branches', id: 'LIST' }],
+        }),
+        createBranchRTK: builder.mutation<void, BranchType>({
+            query: (branch) => ({
+                url: 'branches.json',
+                method: 'POST',
+                body: branch
+            }),
+            invalidatesTags: [{ type: 'Branches', id: 'LIST' }]
+        }),
+        deleteBranchRTK: builder.mutation<void, string>({
+            query: (branchCode) => ({
+                url: `branches/${branchCode}.json`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, branchCode) => [{ type: 'Branches', id: branchCode }]
+        })
+
+    })
+})
+
+export const { useGetBranchesRTKQuery, useCreateBranchRTKMutation, useDeleteBranchRTKMutation } = branchApi
+
 // export function branchReducer(state: BranchArr = initialBranches, action: any) {
 //     switch (action.type) {
 //         case CREATE_BRANCH:
@@ -41,46 +81,4 @@ import { BranchArr, BranchType } from "../../types";
 // })
 
 // export const { getAllBranches, createBranch, deleteBranch } = branchSlice.actions
-
-export const branchApi = createApi({
-    reducerPath: 'branchApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://todollo-default-rtdb.firebaseio.com/' }),
-    tagTypes: ['Branches'],
-    endpoints: (builder) => ({
-        getBranchesRTK: builder.query<BranchArr, void>({
-            query: () => 'branches.json',
-            // transformResponse: (response: any) => Object.values(response),
-            transformResponse: (response: any) => Object.keys(response).map((key) => {
-                return { branchCode: key, branchName: response[key].branchName }
-            }),
-            providesTags: (result) => result
-                ?
-                [
-                    ...result.map(({ branchCode }) => ({ type: 'Branches', branchCode } as const)),
-                    { type: 'Branches', id: 'LIST' },
-                ]
-                :
-                [{ type: 'Branches', id: 'LIST' }],
-        }),
-        createBranchRTK: builder.mutation<void, BranchType>({
-            query: (branch) => ({
-                url: 'branches.json',
-                method: 'POST',
-                body: branch
-            }),
-            invalidatesTags: [{ type: 'Branches', id: 'LIST' }]
-        }),
-        deleteBranchRTK: builder.mutation<void, string>({
-            query: (branchCode) => ({
-                url: `branches/${branchCode}.json`,
-                method: 'DELETE',
-                body: '-NPc_Ubit-yZqaZc2mJa'
-            }),
-            invalidatesTags: [{ type: 'Branches', id: 'LIST' }]
-        })
-
-    })
-})
-
-export const { useGetBranchesRTKQuery, useCreateBranchRTKMutation, useDeleteBranchRTKMutation } = branchApi
 

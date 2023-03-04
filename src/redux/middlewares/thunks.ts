@@ -2,18 +2,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { APItodolloType, AppDispatch, GetStateType, TodosArr, TodoType } from "../../types"
 import { createTodo, deleteTodo, doneTodo } from "../reducers/todosReducer"
 
-
 export const getPostsThunk = createAsyncThunk<
     TodosArr,
     void,
     {
         extra: { APItodollo: APItodolloType },
         rejectValue: string,
-        getState: any
     }
 >(
     'posts/getPosts',
-    async (_, { getState, extra, rejectWithValue }) => {
+    async (_, { extra, rejectWithValue }) => {
         const { APItodollo } = extra
         try {
             const response = await APItodollo.getData('https://todollo-default-rtdb.firebaseio.com/todos.json')

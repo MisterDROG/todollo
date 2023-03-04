@@ -4,7 +4,7 @@ import './branchHolder.css'
 import { useInputChange } from "../../redux/customHooks/useInputChange"
 import { useAppDispatch, useAppSelector } from "../../types"
 import { getPostsThunk } from "../../redux/middlewares/thunks"
-import { useCreateBranchRTKMutation, useDeleteBranchRTKMutation, useGetBranchesRTKQuery } from "../../redux/reducers/branchesReducer"
+import { useCreateBranchRTKMutation, useGetBranchesRTKQuery } from "../../redux/reducers/branchesReducer"
 
 interface BranchHolderProps {
 }
@@ -18,7 +18,6 @@ function BranchHolder(props: BranchHolderProps) {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        // dispatch(getBranchesThunk())
         dispatch(getPostsThunk())
     }, [])
 
