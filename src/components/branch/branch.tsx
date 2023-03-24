@@ -17,7 +17,8 @@ function Branch(props: BranchProps) {
     const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
 
     const filteredTodos = useMemo(() => {
-        return stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
+        const filteredTodos = stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
+        return filteredTodos.sort((a, b) => a.order - b.order)
     }, [stateTodos])
 
     function handleDelete() {
@@ -33,7 +34,8 @@ function Branch(props: BranchProps) {
                 date: (new Date()).toLocaleDateString(),
                 branch: props.branch.branchCode,
                 id: Math.random().toString(36).slice(2, 9),
-                status: TODO_UNDONE
+                status: TODO_UNDONE,
+                order: filteredTodos.length + 1
             }))
             inputTodo.setValue('')
         }

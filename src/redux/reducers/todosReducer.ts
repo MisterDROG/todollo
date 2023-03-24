@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
 import { TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { initialTodos } from "../initialStates"
 import { getPostsThunk } from "../middlewares/thunks"
@@ -26,6 +26,40 @@ export const todoSlice = createSlice({
           toggleTodo.status = TODO_UNDONE;
           break
       }
+    },
+    reOrderTodo(state, action: PayloadAction<{ todoReplaced: TodoType, todoDragged: TodoType }>) {
+      const repalcedOrder = action.payload.todoReplaced.order
+      const draggedOrder = action.payload.todoDragged.order
+      const repalcedBranch = action.payload.todoReplaced.branch
+      if (draggedOrder == repalcedOrder) {
+        return [...state]
+      }
+      console.log('!!todoDragged', draggedOrder, '!!todoReplaced', repalcedOrder)
+      const moc: TodosArr = current(state)
+      const reorderedTodos = moc.map(todo => {
+        if (draggedOrder > repalcedOrder) {
+          if (todo.order >= repalcedOrder && todo.order <= draggedOrder) {
+            if (todo.order == draggedOrder) {
+              return { ...todo, order: repalcedOrder, branch: repalcedBranch }
+            }
+            const newOrder = todo.order + 1
+            return { ...todo, order: newOrder }
+          }
+          return todo
+        } else {
+          if (todo.order <= repalcedOrder && todo.order >= draggedOrder) {
+            if (todo.order == draggedOrder) {
+              return { ...todo, order: repalcedOrder, branch: repalcedBranch }
+            }
+            const newOrder = todo.order - 1
+            return { ...todo, order: newOrder }
+          }
+          return todo
+        }
+      }
+      )
+      console.log('reorderedTodos', reorderedTodos)
+      return reorderedTodos
     }
   },
   extraReducers: (builder) => {
@@ -36,7 +70,7 @@ export const todoSlice = createSlice({
   }
 })
 
-export const { getAllTodos, createTodo, deleteTodo, doneTodo } = todoSlice.actions
+export const { getAllTodos, createTodo, deleteTodo, doneTodo, reOrderTodo } = todoSlice.actions
 
 // export const todosReducer = (state: TodosArr = initialTodos, action: any) => {
 //   console.log(action.type, action.payload)

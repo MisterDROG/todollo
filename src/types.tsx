@@ -10,7 +10,8 @@ export type TodoType = {
     date: string;
     branch: string
     id: string,
-    status: string
+    status: string,
+    order: number
 }
 
 export type TodosArr = TodoType[]
@@ -23,8 +24,9 @@ export type BranchType = {
 export type BranchArr = BranchType[]
 
 export type AppStatus = {
-    status: null | string
-    error: null | string | undefined
+    status: null | string,
+    error: null | string | undefined,
+    draggedTodo: null | TodoType
 }
 
 export type APItodolloType = typeof APItodollo

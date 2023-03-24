@@ -19,63 +19,72 @@
             "date": "01.02.22",
             "id": "1",
             "status": "unDone",
-            "task": "Wash floor"
+            "task": "Wash floor",
+            "order": 1
         },
         {
             "branch": "+house",
             "date": "15.05.22",
             "id": "2",
             "status": "unDone",
-            "task": "Cook food"
+            "task": "Cook food",
+            "order": 2
         },
         {
             "branch": "+house",
             "date": "23.09.22",
             "id": "3",
             "status": "unDone",
-            "task": "Buy dishes"
+            "task": "Buy dishes",
+            "order": 3
         },
         {
             "branch": "+work",
             "date": "11.03.22",
             "id": "4",
             "status": "unDone",
-            "task": "Write program"
+            "task": "Write program",
+            "order": 4
         },
         {
             "branch": "+work",
             "date": "16.04.22",
             "id": "5",
             "status": "unDone",
-            "task": "Work with Excel"
+            "task": "Work with Excel",
+            "order": 5
         },
         {
             "branch": "+work",
             "date": "07.05.22",
             "id": "6",
             "status": "unDone",
-            "task": "Send emails"
+            "task": "Send emails",
+            "order": 6
         },
         {
             "branch": "+sport",
             "date": "06.04.22",
             "id": "7",
             "status": "unDone",
-            "task": "Do squads"
+            "task": "Do squads",
+            "order": 7
         },
         {
             "branch": "+sport",
             "date": "22.11.22",
             "id": "8",
             "status": "unDone",
-            "task": "Play basketball"
+            "task": "Play basketball",
+            "order": 8
         },
         {
             "branch": "+sport",
             "date": "17.12.22",
             "id": "9",
             "status": "unDone",
-            "task": "Upgrade bike"
+            "task": "Upgrade bike",
+            "order": 9
         }
     ]
 }

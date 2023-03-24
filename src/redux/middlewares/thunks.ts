@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { APItodolloType, AppDispatch, GetStateType, TodosArr, TodoType } from "../../types"
-import { createTodo, deleteTodo, doneTodo } from "../reducers/todosReducer"
+import { createTodo, deleteTodo, doneTodo, reOrderTodo } from "../reducers/todosReducer"
 
 export const getPostsThunk = createAsyncThunk<
     TodosArr,
@@ -44,6 +44,15 @@ export function doneTodoThunk(payload: string) {
     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(doneTodo(payload))
+        const state = getState().todos
+        await APItodollo.sendData(`https://todollo-default-rtdb.firebaseio.com/todos.json`, state)
+    }
+}
+
+export function reOrderTodoThunk(payload: { todoReplaced: TodoType, todoDragged: TodoType }) {
+    return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
+        const { APItodollo } = extraArgument
+        dispatch(reOrderTodo(payload))
         const state = getState().todos
         await APItodollo.sendData(`https://todollo-default-rtdb.firebaseio.com/todos.json`, state)
     }

@@ -15,5 +15,6 @@ export const storeTodollo = configureStore({
         thunk: {
             extraArgument: { APItodollo },
         }
-    }).concat(loggerMiddleware, branchApi.middleware)
+        // }).concat(loggerMiddleware, branchApi.middleware)
+    }).concat(branchApi.middleware)
 })

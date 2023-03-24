@@ -35,7 +35,6 @@ function BranchHolder(props: BranchHolderProps) {
 
     return (
         <div className="branchHolder">
-            <p>{JSON.stringify(branchesRTK)}</p>
             {(stateAppStatus.status == 'Loading...') && <h1>{stateAppStatus.status}</h1>}
             {stateAppStatus.error && <h1>{stateAppStatus.error}</h1>}
             {branchesRTK && branchesRTK.map((branch) => {
