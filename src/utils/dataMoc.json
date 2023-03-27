@@ -44,7 +44,7 @@
             "id": "4",
             "status": "unDone",
             "task": "Write program",
-            "order": 4
+            "order": 1
         },
         {
             "branch": "+work",
@@ -52,7 +52,7 @@
             "id": "5",
             "status": "unDone",
             "task": "Work with Excel",
-            "order": 5
+            "order": 2
         },
         {
             "branch": "+work",
@@ -60,7 +60,7 @@
             "id": "6",
             "status": "unDone",
             "task": "Send emails",
-            "order": 6
+            "order": 3
         },
         {
             "branch": "+sport",
@@ -68,7 +68,7 @@
             "id": "7",
             "status": "unDone",
             "task": "Do squads",
-            "order": 7
+            "order": 1
         },
         {
             "branch": "+sport",
@@ -76,7 +76,7 @@
             "id": "8",
             "status": "unDone",
             "task": "Play basketball",
-            "order": 8
+            "order": 2
         },
         {
             "branch": "+sport",
@@ -84,7 +84,7 @@
             "id": "9",
             "status": "unDone",
             "task": "Upgrade bike",
-            "order": 9
+            "order": 3
         }
     ]
 }

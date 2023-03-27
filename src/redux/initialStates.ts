@@ -21,6 +21,8 @@ export const initialBranches: BranchArr = [
 export const initialAppStatus: AppStatus = {
     status: null,
     error: null,
-    draggedTodo: null
+    draggedTodo: null,
+    replacedTodo: null,
+    enteredBranch: null,
 }
 

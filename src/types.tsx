@@ -26,7 +26,9 @@ export type BranchArr = BranchType[]
 export type AppStatus = {
     status: null | string,
     error: null | string | undefined,
-    draggedTodo: null | TodoType
+    draggedTodo: null | TodoType,
+    replacedTodo: null | TodoType
+    enteredBranch: null | BranchType
 }
 
 export type APItodolloType = typeof APItodollo

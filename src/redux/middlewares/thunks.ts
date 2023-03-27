@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { APItodolloType, AppDispatch, GetStateType, TodosArr, TodoType } from "../../types"
+import { APItodolloType, AppDispatch, BranchType, GetStateType, TodosArr, TodoType } from "../../types"
 import { createTodo, deleteTodo, doneTodo, reOrderTodo } from "../reducers/todosReducer"
 
 export const getPostsThunk = createAsyncThunk<
@@ -49,7 +49,7 @@ export function doneTodoThunk(payload: string) {
     }
 }
 
-export function reOrderTodoThunk(payload: { todoReplaced: TodoType, todoDragged: TodoType }) {
+export function reOrderTodoThunk(payload: { replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType }) {
     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(reOrderTodo(payload))

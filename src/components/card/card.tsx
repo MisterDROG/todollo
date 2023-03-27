@@ -1,6 +1,7 @@
-import { DragEvent, useState } from 'react'
-import { deleteTodoThunk, doneTodoThunk, reOrderTodoThunk } from '../../redux/middlewares/thunks'
-import { setDraggedTodo } from '../../redux/reducers/appStatusReducer'
+import { current } from '@reduxjs/toolkit'
+import { DragEvent } from 'react'
+import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
+import { setDraggedTodo, setReplacedTodo, setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
 import { BranchType, TodoType, useAppDispatch, useAppSelector } from '../../types'
 import './card.css'
 
@@ -11,7 +12,6 @@ interface CardProps {
 function Card(props: CardProps) {
 
     const dispatch = useAppDispatch()
-    const draggedTodo = useAppSelector(state => state.appStatus.draggedTodo)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo.id))
@@ -22,46 +22,50 @@ function Card(props: CardProps) {
     }
 
     function dragStartHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
-        console.log('!todoDragStart', todo)
-        console.log('todoDragged1', draggedTodo)
+        // e.stopPropagation()
         dispatch(setDraggedTodo(todo))
-        console.log('todoDragged2', draggedTodo)
     }
 
-    function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
-        console.log('!todoLeave', e.currentTarget.textContent)
+    function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+        console.log("!leave")
+        e.currentTarget.style.marginBottom = "0px"
+        dispatch(setReplacedTodoNull(null))
+        // console.log('!leaveTodo', todo)
     }
 
-    function dragEndHandler(e: DragEvent<HTMLDivElement>): void {
-        console.log('!todoEnd', e.currentTarget.textContent)
-    }
-
-    function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
+    function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        console.log('!todoOver', e.currentTarget.textContent)
+        console.log("!enter")
+        dispatch(setReplacedTodo(todo))
+    }
+
+    function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+        // e.stopPropagation()
+        e.preventDefault()
+        // console.log('target', e.target)
+        e.currentTarget.style.marginBottom = "30px"
     }
 
     function dropHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        console.log('!todoDrop', todo)
-        console.log('todoReplaced', todo, 'todoDragged', draggedTodo)
-        dispatch(reOrderTodoThunk({ todoReplaced: todo, todoDragged: draggedTodo as TodoType }))
+        e.currentTarget.style.marginBottom = "0px"
     }
 
     return (
         <div className="card" draggable={true}
             onDragStart={(e) => dragStartHandler(e, props.todo)}
-            onDragLeave={(e) => dragLeaveHandler(e)}
-            onDragEnd={(e) => dragEndHandler(e)}
-            onDragOver={(e) => dragOverHandler(e)}
+            onDragEnter={(e) => dragEnterHandler(e, props.todo)}
+            onDragLeave={(e) => dragLeaveHandler(e, props.todo)}
+            onDragOver={(e) => dragOverHandler(e, props.todo)}
             onDrop={(e) => dropHandler(e, props.todo)}
         >
-            <p className="card_text">{props.todo.task}</p>
-            <div className='card_info'>
-                <p className='card_info_date'>{props.todo.date}</p>
+            <p className="card__text">{props.todo.task}</p>
+            <p className='card__order'>{props.todo.order}</p>
+            <div className='card__info'>
+                <p className='card__date'>{props.todo.date}</p>
             </div>
-            <button onClick={doneHandler}>{props.todo.status}</button>
-            <button onClick={deleteHandler}>Delete</button>
+            <button className='card__button-done' onClick={doneHandler}>{props.todo.status}</button>
+            <button className='card__button-delete' onClick={deleteHandler}>Delete</button>
         </div>
     )
 }

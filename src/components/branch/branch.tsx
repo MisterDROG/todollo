@@ -1,10 +1,12 @@
+import { DragEvent } from 'react'
 import React, { useMemo } from "react"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { createTodoThunk, deleteTodoThunk, getPostsThunk } from "../../redux/middlewares/thunks"
+import { createTodoThunk, deleteTodoThunk, getPostsThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
 import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
-import { BranchType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
+import { BranchType, TodoType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
 import Card from "../card/card"
 import './branch.css'
+import { setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
 
 interface BranchProps {
     branch: BranchType,
@@ -15,6 +17,9 @@ function Branch(props: BranchProps) {
     const stateTodos = useAppSelector((state) => state.todos)
     const dispatch = useAppDispatch()
     const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
+
+    const draggedTodo = useAppSelector(state => state.appStatus.draggedTodo)
+    const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
 
     const filteredTodos = useMemo(() => {
         const filteredTodos = stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
@@ -40,9 +45,32 @@ function Branch(props: BranchProps) {
             inputTodo.setValue('')
         }
     }
+    function dragEnterHandler(e: DragEvent<HTMLDivElement>): void {
+        e.preventDefault()
+        // dispatch(setReplacedTodoNull(null))
+    }
+
+    function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
+        e.currentTarget.style.backgroundColor = "white"
+    }
+
+    function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
+        e.preventDefault()
+        e.currentTarget.style.backgroundColor = "grey"
+    }
+
+    function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
+        e.preventDefault()
+        e.currentTarget.style.backgroundColor = "white"
+        dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
+    }
 
     return (
-        <div className="branch">
+        <div className="branch"
+            onDragLeave={(e) => dragLeaveHandler(e)}
+            onDragEnter={(e) => dragEnterHandler(e)}
+            onDragOver={(e) => dragOverHandler(e)}
+            onDrop={(e) => dropHandler(e, props.branch)}>
             <p className="branch_name">{props.branch.branchName}</p>
             <button onClick={handleDelete}>Delete</button>
             {filteredTodos && filteredTodos.map((todo) => {

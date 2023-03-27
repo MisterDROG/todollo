@@ -1,5 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
-import { TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
+import { BranchType, TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { initialTodos } from "../initialStates"
 import { getPostsThunk } from "../middlewares/thunks"
 
@@ -27,20 +27,57 @@ export const todoSlice = createSlice({
           break
       }
     },
-    reOrderTodo(state, action: PayloadAction<{ todoReplaced: TodoType, todoDragged: TodoType }>) {
-      const repalcedOrder = action.payload.todoReplaced.order
-      const draggedOrder = action.payload.todoDragged.order
-      const repalcedBranch = action.payload.todoReplaced.branch
+    reOrderTodo(state, action: PayloadAction<{ replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType }>) {
+      const currentBranchTodos = current(state).filter(todo => todo.branch == action.payload.enteredBranch.branchCode)
+      const dragoutedState = current(state).map(todo => {
+        if (todo.branch == action.payload.draggedTodo.branch && todo.order > action.payload.draggedTodo.order) {
+          const newOrder = todo.order - 1
+          return { ...todo, order: newOrder }
+        }
+        return todo
+      })
+      console.log('null')
+      if (action.payload.replacedTodo == null) {
+        return dragoutedState.map(todo => {
+          if (todo.id == action.payload.draggedTodo.id) {
+            return { ...todo, branch: action.payload.enteredBranch.branchCode, order: 1 }
+          }
+          return todo
+        })
+      }
+      const repalcedOrder = action.payload.replacedTodo.order
+      const draggedOrder = action.payload.draggedTodo.order
+      const enteredBranch = action.payload.enteredBranch.branchCode
+      console.log('equal')
       if (draggedOrder == repalcedOrder) {
         return [...state]
       }
-      console.log('!!todoDragged', draggedOrder, '!!todoReplaced', repalcedOrder)
+      console.log('done')
+      return dragoutedState.map(todo => {
+        if (todo.branch == enteredBranch && todo.order > repalcedOrder) {
+          const newOrder = todo.order + 1
+          return { ...todo, order: newOrder }
+        } else if (todo.branch == action.payload.draggedTodo.branch && todo.order == action.payload.draggedTodo.order) {
+          const newOrder = repalcedOrder + 1
+          return { ...todo, order: newOrder }
+        }
+        return todo
+      })
+    },
+    reOrderTodo2(state, action: PayloadAction<{ replacedTodo: TodoType, draggedTodo: TodoType, enteredBranch: BranchType }>) {
+      const repalcedOrder = action.payload.replacedTodo.order
+      const draggedOrder = action.payload.draggedTodo.order
+      const enteredBranch = action.payload.enteredBranch.branchCode
+      if (draggedOrder == repalcedOrder) {
+        return [...state]
+      }
+      console.log('!!draggedTodo', draggedOrder, '!!replacedTodo', repalcedOrder)
       const moc: TodosArr = current(state)
       const reorderedTodos = moc.map(todo => {
         if (draggedOrder > repalcedOrder) {
           if (todo.order >= repalcedOrder && todo.order <= draggedOrder) {
             if (todo.order == draggedOrder) {
-              return { ...todo, order: repalcedOrder, branch: repalcedBranch }
+              return { ...todo, order: repalcedOrder, branch: enteredBranch }
             }
             const newOrder = todo.order + 1
             return { ...todo, order: newOrder }
@@ -49,7 +86,7 @@ export const todoSlice = createSlice({
         } else {
           if (todo.order <= repalcedOrder && todo.order >= draggedOrder) {
             if (todo.order == draggedOrder) {
-              return { ...todo, order: repalcedOrder, branch: repalcedBranch }
+              return { ...todo, order: repalcedOrder, branch: enteredBranch }
             }
             const newOrder = todo.order - 1
             return { ...todo, order: newOrder }
@@ -58,7 +95,6 @@ export const todoSlice = createSlice({
         }
       }
       )
-      console.log('reorderedTodos', reorderedTodos)
       return reorderedTodos
     }
   },
