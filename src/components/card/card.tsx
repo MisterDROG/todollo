@@ -1,8 +1,7 @@
-import { current } from '@reduxjs/toolkit'
-import { DragEvent } from 'react'
+import { DragEvent, useState } from 'react'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
-import { setDraggedTodo, setReplacedTodo, setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
-import { BranchType, TodoType, useAppDispatch, useAppSelector } from '../../types'
+import { setDraggedTodo, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
+import { TodoType, useAppDispatch, useAppSelector } from '../../types'
 import './card.css'
 
 interface CardProps {
@@ -13,6 +12,7 @@ function Card(props: CardProps) {
 
     const dispatch = useAppDispatch()
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
+    const [isDraggedOver, setIsDraggedOver] = useState(false)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo))
@@ -27,12 +27,15 @@ function Card(props: CardProps) {
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+        setIsDraggedOver(false)
         e.currentTarget.style.marginBottom = "0px"
     }
 
     function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
+        setIsDraggedOver(true)
         dispatch(setReplacedTodo(todo))
+        console.log(e)
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
@@ -58,8 +61,12 @@ function Card(props: CardProps) {
             <div className='card__info'>
                 <p className='card__date'>{props.todo.date}</p>
             </div>
-            <button className='card__button-done' onClick={doneHandler}>{props.todo.status}</button>
-            <button className='card__button-delete' onClick={deleteHandler}>Delete</button>
+            {isDraggedOver ?
+                <button className='card__button-done card_pointerSwitch' onClick={doneHandler}>{props.todo.status}</button> :
+                <button className='card__button-done' onClick={doneHandler}>{props.todo.status}</button>}
+            {isDraggedOver ?
+                <button className='card__button-delete card_pointerSwitch' onClick={deleteHandler}>Delete</button> :
+                <button className='card__button-delete' onClick={deleteHandler}>Delete</button>}
         </div>
     )
 }

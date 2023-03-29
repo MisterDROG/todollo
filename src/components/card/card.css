@@ -28,9 +28,13 @@
 
 
 .card__button-delete {
-    margin: 0px;
+    margin: 10px;
 }
 
 .card__button-done {
-    margin: 0px;
+    margin: 10px;
+}
+
+.card_pointerSwitch {
+    pointer-events: none
 }
