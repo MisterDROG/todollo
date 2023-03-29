@@ -47,7 +47,9 @@ function Branch(props: BranchProps) {
     }
     function dragEnterHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
-        // dispatch(setReplacedTodoNull(null))
+        if (e.target == e.currentTarget) {
+            dispatch(setReplacedTodoNull(null))
+        }
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
@@ -61,6 +63,7 @@ function Branch(props: BranchProps) {
 
     function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
         e.preventDefault()
+        console.log('dropBranch', branch)
         e.currentTarget.style.backgroundColor = "white"
         dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
     }

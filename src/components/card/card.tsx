@@ -12,6 +12,7 @@ interface CardProps {
 function Card(props: CardProps) {
 
     const dispatch = useAppDispatch()
+    const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo.id))
@@ -22,27 +23,22 @@ function Card(props: CardProps) {
     }
 
     function dragStartHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
-        // e.stopPropagation()
         dispatch(setDraggedTodo(todo))
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
-        console.log("!leave")
         e.currentTarget.style.marginBottom = "0px"
-        dispatch(setReplacedTodoNull(null))
-        // console.log('!leaveTodo', todo)
     }
 
     function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        console.log("!enter")
         dispatch(setReplacedTodo(todo))
+        console.log("!enter", e.currentTarget)
+
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
-        // e.stopPropagation()
         e.preventDefault()
-        // console.log('target', e.target)
         e.currentTarget.style.marginBottom = "30px"
     }
 

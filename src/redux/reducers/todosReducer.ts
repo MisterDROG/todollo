@@ -39,8 +39,10 @@ export const todoSlice = createSlice({
       console.log('null')
       if (action.payload.replacedTodo == null) {
         return dragoutedState.map(todo => {
-          if (todo.id == action.payload.draggedTodo.id) {
+          if (todo.id == action.payload.draggedTodo.id && currentBranchTodos.length == 0) {
             return { ...todo, branch: action.payload.enteredBranch.branchCode, order: 1 }
+          } else if (todo.id == action.payload.draggedTodo.id && currentBranchTodos.length !== 0) {
+            return { ...todo, branch: action.payload.enteredBranch.branchCode, order: currentBranchTodos.length + 1 }
           }
           return todo
         })
@@ -49,54 +51,25 @@ export const todoSlice = createSlice({
       const draggedOrder = action.payload.draggedTodo.order
       const enteredBranch = action.payload.enteredBranch.branchCode
       console.log('equal')
-      if (draggedOrder == repalcedOrder) {
+      if (action.payload.draggedTodo.id == action.payload.replacedTodo.id) {
         return [...state]
       }
       console.log('done')
-      return dragoutedState.map(todo => {
+      const returnedState = dragoutedState.map(todo => {
         if (todo.branch == enteredBranch && todo.order > repalcedOrder) {
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
-        } else if (todo.branch == action.payload.draggedTodo.branch && todo.order == action.payload.draggedTodo.order) {
+        } else if (todo.id == action.payload.draggedTodo.id) {
           const newOrder = repalcedOrder + 1
-          return { ...todo, order: newOrder }
+          return { ...todo, order: newOrder, branch: enteredBranch }
         }
         return todo
       })
+      console.log("current(state): ", current(state))
+      console.log("dragoutedState: ", dragoutedState)
+      console.log("returnedState: ", returnedState)
+      return returnedState
     },
-    reOrderTodo2(state, action: PayloadAction<{ replacedTodo: TodoType, draggedTodo: TodoType, enteredBranch: BranchType }>) {
-      const repalcedOrder = action.payload.replacedTodo.order
-      const draggedOrder = action.payload.draggedTodo.order
-      const enteredBranch = action.payload.enteredBranch.branchCode
-      if (draggedOrder == repalcedOrder) {
-        return [...state]
-      }
-      console.log('!!draggedTodo', draggedOrder, '!!replacedTodo', repalcedOrder)
-      const moc: TodosArr = current(state)
-      const reorderedTodos = moc.map(todo => {
-        if (draggedOrder > repalcedOrder) {
-          if (todo.order >= repalcedOrder && todo.order <= draggedOrder) {
-            if (todo.order == draggedOrder) {
-              return { ...todo, order: repalcedOrder, branch: enteredBranch }
-            }
-            const newOrder = todo.order + 1
-            return { ...todo, order: newOrder }
-          }
-          return todo
-        } else {
-          if (todo.order <= repalcedOrder && todo.order >= draggedOrder) {
-            if (todo.order == draggedOrder) {
-              return { ...todo, order: repalcedOrder, branch: enteredBranch }
-            }
-            const newOrder = todo.order - 1
-            return { ...todo, order: newOrder }
-          }
-          return todo
-        }
-      }
-      )
-      return reorderedTodos
-    }
   },
   extraReducers: (builder) => {
     builder
