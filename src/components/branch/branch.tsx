@@ -27,7 +27,7 @@ function Branch(props: BranchProps) {
     }, [stateTodos])
 
     function handleDelete() {
-        filteredTodos.forEach((todo) => dispatch(deleteTodoThunk(todo.id)))
+        filteredTodos.forEach((todo) => dispatch(deleteTodoThunk(todo)))
         deleteBranchRTK(props.branch.branchCode)
     }
 
@@ -63,7 +63,6 @@ function Branch(props: BranchProps) {
 
     function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
         e.preventDefault()
-        console.log('dropBranch', branch)
         e.currentTarget.style.backgroundColor = "white"
         dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
     }

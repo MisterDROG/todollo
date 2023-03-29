@@ -15,7 +15,7 @@ function Card(props: CardProps) {
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
 
     function deleteHandler() {
-        dispatch(deleteTodoThunk(props.todo.id))
+        dispatch(deleteTodoThunk(props.todo))
     }
 
     function doneHandler() {
@@ -33,8 +33,6 @@ function Card(props: CardProps) {
     function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
         dispatch(setReplacedTodo(todo))
-        console.log("!enter", e.currentTarget)
-
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {

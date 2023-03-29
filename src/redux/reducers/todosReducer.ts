@@ -1,4 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
+import { act } from "react-dom/test-utils"
 import { BranchType, TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { initialTodos } from "../initialStates"
 import { getPostsThunk } from "../middlewares/thunks"
@@ -13,8 +14,16 @@ export const todoSlice = createSlice({
     createTodo(state, action: PayloadAction<TodoType>) {
       state.push(action.payload)
     },
-    deleteTodo(state, action: PayloadAction<string>) {
-      state.splice(state.findIndex((todo) => todo.id === action.payload), 1)
+    deleteTodo(state, action: PayloadAction<TodoType>) {
+      const changedOrderState = current(state).map(todo => {
+        if (todo.branch == action.payload.branch && todo.order > action.payload.order) {
+          const newOrder = todo.order - 1
+          return { ...todo, order: newOrder }
+        }
+        return todo
+      })
+      changedOrderState.splice(state.findIndex((todo) => todo.id === action.payload.id), 1)
+      return changedOrderState
     },
     doneTodo(state, action: PayloadAction<string>) {
       const toggleTodo = state[state.findIndex((todo) => todo.id === action.payload)]
@@ -36,7 +45,6 @@ export const todoSlice = createSlice({
         }
         return todo
       })
-      console.log('null')
       if (action.payload.replacedTodo == null) {
         return dragoutedState.map(todo => {
           if (todo.id == action.payload.draggedTodo.id && currentBranchTodos.length == 0) {
@@ -49,25 +57,32 @@ export const todoSlice = createSlice({
       }
       const repalcedOrder = action.payload.replacedTodo.order
       const draggedOrder = action.payload.draggedTodo.order
-      const enteredBranch = action.payload.enteredBranch.branchCode
-      console.log('equal')
+      const repalcedBranch = action.payload.replacedTodo.branch
+      const draggedBranch = action.payload.draggedTodo.branch
       if (action.payload.draggedTodo.id == action.payload.replacedTodo.id) {
         return [...state]
       }
-      console.log('done')
       const returnedState = dragoutedState.map(todo => {
-        if (todo.branch == enteredBranch && todo.order > repalcedOrder) {
+        if (todo.branch == repalcedBranch && todo.order > repalcedOrder && todo.id !== action.payload.draggedTodo.id) {
+          console.log('@todo', todo)
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
-        } else if (todo.id == action.payload.draggedTodo.id) {
+        } else if (todo.branch == repalcedBranch && repalcedBranch == draggedBranch && draggedOrder < repalcedOrder && todo.order == repalcedOrder) {
+          console.log('@@todo', todo)
+          const newOrder = todo.order + 1
+          return { ...todo, order: newOrder }
+        } else if (todo.id == action.payload.draggedTodo.id && repalcedBranch !== draggedBranch) {
           const newOrder = repalcedOrder + 1
-          return { ...todo, order: newOrder, branch: enteredBranch }
+          return { ...todo, order: newOrder, branch: repalcedBranch }
+        } else if (todo.id == action.payload.draggedTodo.id && repalcedBranch == draggedBranch && draggedOrder > repalcedOrder) {
+          const newOrder = repalcedOrder + 1
+          return { ...todo, order: newOrder, branch: repalcedBranch }
+        } else if (todo.id == action.payload.draggedTodo.id && repalcedBranch == draggedBranch && draggedOrder < repalcedOrder) {
+          const newOrder = repalcedOrder
+          return { ...todo, order: newOrder, branch: repalcedBranch }
         }
         return todo
       })
-      console.log("current(state): ", current(state))
-      console.log("dragoutedState: ", dragoutedState)
-      console.log("returnedState: ", returnedState)
       return returnedState
     },
   },

@@ -31,7 +31,7 @@ export function createTodoThunk(payload: TodoType) {
     }
 }
 
-export function deleteTodoThunk(payload: string) {
+export function deleteTodoThunk(payload: TodoType) {
     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(deleteTodo(payload))

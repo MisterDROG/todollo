@@ -1,20 +1,24 @@
 .card {
     border: solid black;
     background-color: aqua;
+    cursor: grab
 }
 
 .card__text {
     margin: 0px;
-    padding: 8px 0px
+    padding: 8px 0px;
+    pointer-events: none
 }
 
 .card__order {
     margin: 0px;
-    padding: 8px 0px
+    padding: 8px 0px;
+    pointer-events: none
 }
 
 .card__info {
     margin: 0px;
+    pointer-events: none
 }
 
 .card__date {
