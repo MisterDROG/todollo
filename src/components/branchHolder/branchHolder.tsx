@@ -34,15 +34,15 @@ function BranchHolder(props: BranchHolderProps) {
     }
 
     return (
-        <div className="branchHolder">
-            {(stateAppStatus.status == 'Loading...') && <h1>{stateAppStatus.status}</h1>}
-            {stateAppStatus.error && <h1>{stateAppStatus.error}</h1>}
+        <div className="branch-holder">
+            {(stateAppStatus.status == 'Loading...') && <h1 className="branch-holder__loading">{stateAppStatus.status}</h1>}
+            {stateAppStatus.error && <h1 className="branch-holder__error">{stateAppStatus.error}</h1>}
             {branchesRTK && branchesRTK.map((branch) => {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
-            <form onSubmit={handleSubmit}>
-                <input type='text' placeholder="New Branch" onChange={inputBranch.onChange} value={inputBranch.value} />
-                <button>Add</button>
+            <form className="branch-holder__form-new-branch" onSubmit={handleSubmit}>
+                <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
+                <button className="branch-holder__button-add-branch">Add</button>
             </form>
         </div>
     )

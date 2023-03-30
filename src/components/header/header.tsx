@@ -6,9 +6,9 @@ function Header() {
 
     return (
         <div className="header">
-            <div className="header__logoContainer">
-                <img className="header__logoImg" src={todolloLogo} alt='todollo Logo'></img>
-                <p className="header__logoText">ToDollo</p>
+            <div className="header__logo-container">
+                <img className="header__logo-img" src={todolloLogo} alt='ToDollo Logo'></img>
+                <p className="header__logo-text">ToDollo board</p>
             </div>
         </div>
     )

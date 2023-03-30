@@ -1,0 +1,62 @@
+.branch {
+    display: flex;
+    flex-direction: column;
+    background-color: #D2EFFF;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 1px grey;
+}
+
+.branch__name-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.branch__name {
+    margin: 7px 0px;
+    font-weight: bold;
+}
+
+.branch__button-delete {
+    font-weight: bold;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #cecdcd;
+}
+
+.branch__button-delete:hover {
+    background-color: #ff9191;
+    box-shadow: 0px 0px 5px 1px grey;
+}
+
+.branch__form-new-card {
+    margin: 10px 0px 0px;
+}
+
+.branch__input-new-card {
+    height: 20px;
+    border-radius: 5px;
+    border: 2px solid #cecdcd;
+    width: 150px;
+    margin: 0px 10px 0px 0px;
+}
+
+.branch__button-add-card {
+    font-weight: bold;
+    width: 50px;
+    height: 25px;
+    font-size: 15px;
+    border: none;
+    background-color: #cecdcd;
+    border-radius: 8px;
+    padding: 0px 10px;
+}
+
+.branch__button-add-card:hover {
+    background-color: #93ff91;
+    box-shadow: 0px 0px 5px 1px grey;
+}

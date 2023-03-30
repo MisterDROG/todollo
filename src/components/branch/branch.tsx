@@ -53,7 +53,7 @@ function Branch(props: BranchProps) {
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
-        e.currentTarget.style.backgroundColor = "white"
+        e.currentTarget.style.backgroundColor = "#D2EFFF"
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
@@ -63,7 +63,7 @@ function Branch(props: BranchProps) {
 
     function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
         e.preventDefault()
-        e.currentTarget.style.backgroundColor = "white"
+        e.currentTarget.style.backgroundColor = "#D2EFFF"
         dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
     }
 
@@ -73,16 +73,17 @@ function Branch(props: BranchProps) {
             onDragEnter={(e) => dragEnterHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, props.branch)}>
-            <p className="branch_name">{props.branch.branchName}</p>
-            <button onClick={handleDelete}>Delete</button>
+            <div className="branch__name-container">
+                <p className="branch__name">{props.branch.branchName}</p>
+                <button className="branch__button-delete" onClick={handleDelete}>X</button>
+            </div>
             {filteredTodos && filteredTodos.map((todo) => {
                 return <Card todo={todo} key={todo.id} />
             })}
-            <form onSubmit={handleSubmit}>
-                <input type='text' placeholder="New Task..." onChange={inputTodo.onChange} value={inputTodo.value} />
-                <button>Add</button>
+            <form className="branch__form-new-card" onSubmit={handleSubmit}>
+                <input className="branch__input-new-card" type='text' placeholder="New Task..." onChange={inputTodo.onChange} value={inputTodo.value} />
+                <button className="branch__button-add-card">Add</button>
             </form>
-            <button onClick={() => dispatch(getPostsThunk())}>GetPosts</button>
         </div>
     )
 }
