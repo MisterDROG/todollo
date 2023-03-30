@@ -2,7 +2,7 @@ import { DragEvent, useState } from 'react'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
 import { setDraggedTodo, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
 import { TodoType, useAppDispatch, useAppSelector } from '../../types'
-import './card.css'
+import './card.scss'
 
 interface CardProps {
     todo: TodoType,

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import Branch from "../branch/branch"
-import './branchHolder.css'
+import './branchHolder.scss'
 import { useInputChange } from "../../redux/customHooks/useInputChange"
 import { useAppDispatch, useAppSelector } from "../../types"
 import { getPostsThunk } from "../../redux/middlewares/thunks"

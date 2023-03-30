@@ -5,7 +5,7 @@ import { createTodoThunk, deleteTodoThunk, getPostsThunk, reOrderTodoThunk } fro
 import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
 import { BranchType, TodoType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
 import Card from "../card/card"
-import './branch.css'
+import './branch.scss'
 import { setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
 
 interface BranchProps {
