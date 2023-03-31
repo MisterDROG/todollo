@@ -1,4 +1,4 @@
-import { DragEvent } from 'react'
+import { DragEvent, useState } from 'react'
 import React, { useMemo } from "react"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
 import { createTodoThunk, deleteTodoThunk, getPostsThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
@@ -16,6 +16,7 @@ function Branch(props: BranchProps) {
     const inputTodo = useInputChange('')
     const stateTodos = useAppSelector((state) => state.todos)
     const dispatch = useAppDispatch()
+    const [isCardOver, setIsCardOver] = useState(false)
     const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
 
     const draggedTodo = useAppSelector(state => state.appStatus.draggedTodo)
@@ -53,17 +54,17 @@ function Branch(props: BranchProps) {
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
-        e.currentTarget.style.backgroundColor = "#D2EFFF"
+        setIsCardOver(false)
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
-        e.currentTarget.style.backgroundColor = "grey"
+        setIsCardOver(true)
     }
 
     function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
         e.preventDefault()
-        e.currentTarget.style.backgroundColor = "#D2EFFF"
+        setIsCardOver(false)
         dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
     }
 
@@ -73,17 +74,19 @@ function Branch(props: BranchProps) {
             onDragEnter={(e) => dragEnterHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, props.branch)}>
-            <div className="branch__name-container">
-                <p className="branch__name">{props.branch.branchName}</p>
-                <button className="branch__button-delete" onClick={handleDelete}>X</button>
+            <div className='branch-container' style={{ backgroundColor: `${isCardOver ? '#91a9ff' : ''}` }}>
+                <div className="branch__name-container">
+                    <p className="branch__name">{props.branch.branchName}</p>
+                    <button className="branch__button-delete" onClick={handleDelete}>X</button>
+                </div>
+                {filteredTodos && filteredTodos.map((todo) => {
+                    return <Card todo={todo} key={todo.id} />
+                })}
+                <form className="branch__form-new-card" onSubmit={handleSubmit}>
+                    <input className="branch__input-new-card" type='text' placeholder="New Task..." onChange={inputTodo.onChange} value={inputTodo.value} />
+                    <button className="branch__button-add-card">Add</button>
+                </form>
             </div>
-            {filteredTodos && filteredTodos.map((todo) => {
-                return <Card todo={todo} key={todo.id} />
-            })}
-            <form className="branch__form-new-card" onSubmit={handleSubmit}>
-                <input className="branch__input-new-card" type='text' placeholder="New Task..." onChange={inputTodo.onChange} value={inputTodo.value} />
-                <button className="branch__button-add-card">Add</button>
-            </form>
         </div>
     )
 }

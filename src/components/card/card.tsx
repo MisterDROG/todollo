@@ -29,14 +29,14 @@ function Card(props: CardProps) {
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         setIsDraggedOver(false)
+        console.log('targetLeave', e.target)
         e.currentTarget.style.marginBottom = "10px"
     }
 
     function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        setIsDraggedOver(true)
         dispatch(setReplacedTodo(todo))
-        console.log(e)
+        setIsDraggedOver(true)
     }
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
@@ -47,6 +47,7 @@ function Card(props: CardProps) {
     function dropHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
         e.currentTarget.style.marginBottom = "10px"
+        setIsDraggedOver(false)
     }
 
     return (
@@ -57,21 +58,18 @@ function Card(props: CardProps) {
             onDragOver={(e) => dragOverHandler(e, props.todo)}
             onDrop={(e) => dropHandler(e, props.todo)}
         >
-            <div className='card__header'>
+            <div className={'card__header' + (isDraggedOver ? ' card_pointer-switch' : '')}>
                 <p className='card__text'>{props.todo.task}</p>
-                {isDraggedOver ?
-                    <button className='card__button-delete card_pointer-switch' onClick={deleteHandler}>X</button> :
-                    <button className='card__button-delete' onClick={deleteHandler}>X</button>}
+                <button className={'card__button-delete' + (isDraggedOver ? ' card_pointer-switch' : '')} onClick={deleteHandler}>X</button>
             </div>
 
             {/* <p className='card__order'>{props.todo.order}</p> */}
-            <div className='card__info'>
+            <div className={'card__info' + (isDraggedOver ? ' card_pointer-switch' : '')}>
                 <img className='card__logo-img' src={clockDate} alt='clockDate image'></img>
                 <p className='card__date'>{props.todo.date}</p>
             </div>
-            {isDraggedOver ?
-                <button className='card__button-done card_pointer-switch' onClick={doneHandler}>{props.todo.status}</button> :
-                <button className='card__button-done' onClick={doneHandler}>{props.todo.status}</button>}
+            <button className={(props.todo.status == 'Done' ? 'card__button-status_done' : 'card__button-status_undone') + (isDraggedOver ? ' card_pointer-switch' : '')}
+                onClick={doneHandler}>{props.todo.status}</button>
         </div>
     )
 }
