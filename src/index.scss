@@ -1,13 +1,8 @@
 @import-normalize;
 
-html {
-  width: 100%;
-  height: 100%;
-}
+html {}
 
 body {
-  width: 100%;
-  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -17,8 +12,13 @@ body {
 }
 
 #root {
-  width: 100%;
-  height: 100%;
+  min-height: 2160px;
+  height: 1px;
+  min-width: 320px;
+  max-width: 5000px;
+  background: linear-gradient(217deg, #00A3FF, rgba(0, 247, 255, 0) 70%),
+    linear-gradient(127deg, rgb(0, 234, 255), rgba(248, 248, 248, 0) 60%),
+    linear-gradient(336deg, rgb(136, 0, 255), rgba(111, 0, 255, 0));
 }
 
 code {
