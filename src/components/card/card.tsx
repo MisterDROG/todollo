@@ -41,7 +41,7 @@ function Card(props: CardProps) {
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        e.currentTarget.style.marginBottom = "30px"
+        e.currentTarget.style.marginBottom = "50px"
     }
 
     function dropHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
@@ -70,6 +70,7 @@ function Card(props: CardProps) {
             </div>
             <button className={(props.todo.status == 'Done' ? 'card__button-status_done' : 'card__button-status_undone') + (isDraggedOver ? ' card_pointer-switch' : '')}
                 onClick={doneHandler}>{props.todo.status}</button>
+            {isDraggedOver ? <div className='card__label'>→ PUT HERE ←</div> : ''}
         </div>
     )
 }
