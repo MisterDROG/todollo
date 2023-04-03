@@ -1,6 +1,12 @@
 .branch {
     min-width: 260px;
     height: 100%;
+
+    @media screen and (max-width: 400px) {
+        min-width: 150px;
+        width: 100%;
+        height: auto;
+    }
 }
 
 .branch-container {
@@ -12,6 +18,10 @@
     flex-direction: column;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 1px grey;
+
+    @media screen and (max-width: 400px) {
+        width: auto;
+    }
 }
 
 .branch__name-container {
@@ -44,6 +54,11 @@
 
 .branch__form-new-card {
     margin: 10px 0px 0px;
+
+    @media screen and (max-width: 400px) {
+        display: flex;
+        width: 100%
+    }
 }
 
 .branch__input-new-card {
@@ -52,9 +67,14 @@
     border: 2px solid #cecdcd;
     width: 150px;
     margin: 0px 10px 0px 0px;
+
+    @media screen and (max-width: 400px) {
+        width: 75%;
+    }
 }
 
 .branch__button-add-card {
+    flex: 0 0 auto;
     font-weight: bold;
     width: 50px;
     height: 25px;
