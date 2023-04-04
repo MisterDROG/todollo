@@ -5,6 +5,7 @@ import { useInputChange } from "../../redux/customHooks/useInputChange"
 import { useAppDispatch, useAppSelector } from "../../types"
 import { getPostsThunk } from "../../redux/middlewares/thunks"
 import { useCreateBranchRTKMutation, useGetBranchesRTKQuery } from "../../redux/reducers/branchesReducer"
+import { initialBranches, initialTodos } from "../../redux/initialStates"
 
 interface BranchHolderProps {
 }
@@ -35,11 +36,14 @@ function BranchHolder(props: BranchHolderProps) {
 
     return (
         <div className="branch-holder">
-            {(stateAppStatus.status == 'Loading...') && <h1 className="branch-holder__loading">{stateAppStatus.status}</h1>}
             {stateAppStatus.error && <h1 className="branch-holder__error">{stateAppStatus.error}</h1>}
+            {isLoadingGet && initialBranches.map((branch) => {
+                return <Branch key={branch.branchCode} branch={branch} />
+            })}
             {branchesRTK && branchesRTK.map((branch) => {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
+            {isLoadingCreate && <Branch branch={{ branchName: 'Loading...', branchCode: 'Loading' }} />}
             <form className="branch-holder__form-new-branch" onSubmit={handleSubmit}>
                 <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
                 <button className="branch-holder__button-add-branch">Add</button>

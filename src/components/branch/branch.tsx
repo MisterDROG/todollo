@@ -76,7 +76,7 @@ function Branch(props: BranchProps) {
             onDrop={(e) => dropHandler(e, props.branch)}>
             <div className='branch-container' style={{ backgroundColor: `${isCardOver ? '#91a9ff' : ''}` }}>
                 <div className="branch__name-container">
-                    <p className="branch__name">{props.branch.branchName}</p>
+                    <p className="branch__name">{isLoadingDelete ? "Deleting..." : props.branch.branchName}</p>
                     <button className="branch__button-delete" onClick={handleDelete}>X</button>
                 </div>
                 {filteredTodos && filteredTodos.map((todo) => {
