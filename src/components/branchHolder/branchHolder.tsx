@@ -36,7 +36,7 @@ function BranchHolder(props: BranchHolderProps) {
 
     return (
         <div className="branch-holder">
-            {stateAppStatus.error && <h1 className="branch-holder__error">{stateAppStatus.error}</h1>}
+            {stateAppStatus.error && <h1 className="branch-holder__error">{'Error: ' + stateAppStatus.error + '!'}</h1>}
             {isLoadingGet && initialBranches.map((branch) => {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
@@ -44,10 +44,10 @@ function BranchHolder(props: BranchHolderProps) {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
             {isLoadingCreate && <Branch branch={{ branchName: 'Loading...', branchCode: 'Loading' }} />}
-            <form className="branch-holder__form-new-branch" onSubmit={handleSubmit}>
+            {!stateAppStatus.error && <form className="branch-holder__form-new-branch" onSubmit={handleSubmit}>
                 <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
                 <button className="branch-holder__button-add-branch">Add</button>
-            </form>
+            </form>}
         </div>
     )
 }

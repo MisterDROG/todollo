@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TodoType } from "../../types";
 import { initialAppStatus } from "../initialStates";
 import { getPostsThunk } from "../middlewares/thunks";
+import { reOrderTodo } from "./todosReducer";
 
 export const appStatusSlice = createSlice({
     name: 'appStatusSlice',
@@ -15,6 +16,9 @@ export const appStatusSlice = createSlice({
         },
         setReplacedTodoNull(state, action: PayloadAction<null>) {
             state.replacedTodo = action.payload
+        },
+        setIsDragging(state, action: PayloadAction<boolean>) {
+            state.isDragging = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -31,7 +35,10 @@ export const appStatusSlice = createSlice({
                 state.status = 'Download rejected'
                 state.error = action.payload
             })
+            .addCase(reOrderTodo, (state, action) => {
+                state.isDragging = false
+            })
     }
 })
 
-export const { setDraggedTodo, setReplacedTodo, setReplacedTodoNull } = appStatusSlice.actions
+export const { setDraggedTodo, setReplacedTodo, setReplacedTodoNull, setIsDragging } = appStatusSlice.actions

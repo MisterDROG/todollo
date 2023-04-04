@@ -64,11 +64,9 @@ export const todoSlice = createSlice({
       }
       const returnedState = dragoutedState.map(todo => {
         if (todo.branch == repalcedBranch && todo.order > repalcedOrder && todo.id !== action.payload.draggedTodo.id) {
-          console.log('@todo', todo)
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
         } else if (todo.branch == repalcedBranch && repalcedBranch == draggedBranch && draggedOrder < repalcedOrder && todo.order == repalcedOrder) {
-          console.log('@@todo', todo)
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
         } else if (todo.id == action.payload.draggedTodo.id && repalcedBranch !== draggedBranch) {

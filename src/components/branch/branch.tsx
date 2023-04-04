@@ -74,7 +74,8 @@ function Branch(props: BranchProps) {
             onDragEnter={(e) => dragEnterHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, props.branch)}>
-            <div className='branch-container' style={{ backgroundColor: `${isCardOver ? '#91a9ff' : ''}` }}>
+            {/* <div className='branch-container' style={{ backgroundColor: `${isCardOver ? '#91a9ff' : ''}` }}> */}
+            <div className='branch-container'>
                 <div className="branch__name-container">
                     <p className="branch__name">{isLoadingDelete ? "Deleting..." : props.branch.branchName}</p>
                     <button className="branch__button-delete" onClick={handleDelete}>X</button>

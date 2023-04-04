@@ -1,6 +1,6 @@
 import { DragEvent, useState } from 'react'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
-import { setDraggedTodo, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
+import { setDraggedTodo, setIsDragging, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
 import { TodoType, useAppDispatch, useAppSelector } from '../../types'
 import './card.scss'
 import clockDate from '../../images/clock_date.png';
@@ -13,7 +13,9 @@ function Card(props: CardProps) {
 
     const dispatch = useAppDispatch()
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
+    const isDragging = useAppSelector(state => state.appStatus.isDragging)
     const [isDraggedOver, setIsDraggedOver] = useState(false)
+    const [positionCurTar, setPositionCurTar] = useState(false)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo))
@@ -24,13 +26,12 @@ function Card(props: CardProps) {
     }
 
     function dragStartHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+        dispatch(setIsDragging(true))
         dispatch(setDraggedTodo(todo))
     }
 
     function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         setIsDraggedOver(false)
-        console.log('targetLeave', e.target)
-        e.currentTarget.style.marginBottom = "10px"
     }
 
     function dragEnterHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
@@ -41,17 +42,28 @@ function Card(props: CardProps) {
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        e.currentTarget.style.marginBottom = "50px"
+        const heightCurrentTarget = e.currentTarget.getBoundingClientRect().height
+        const topCurrentTarget = e.currentTarget.getBoundingClientRect().top
+        const pageY = e.pageY
+        const positionCurrentTarget = pageY - topCurrentTarget - heightCurrentTarget / 2
+        if (positionCurrentTarget > 0) {
+            setPositionCurTar(true)
+            e.currentTarget.style.marginBottom = "50px"
+            e.currentTarget.style.marginTop = "10px"
+        } else {
+            setPositionCurTar(false)
+            e.currentTarget.style.marginTop = "50px"
+            e.currentTarget.style.marginBottom = "10px"
+        }
     }
 
     function dropHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
         e.preventDefault()
-        e.currentTarget.style.marginBottom = "10px"
-        setIsDraggedOver(false)
     }
 
     return (
-        <div className='card' draggable={true}
+        <div className='card' style={((replacedTodo != props.todo) || (isDragging == false)) ? { marginTop: '10px', marginBottom: '10px' } : {}}
+            draggable={true}
             onDragStart={(e) => dragStartHandler(e, props.todo)}
             onDragEnter={(e) => dragEnterHandler(e, props.todo)}
             onDragLeave={(e) => dragLeaveHandler(e, props.todo)}
@@ -70,7 +82,7 @@ function Card(props: CardProps) {
             </div>
             <button className={(props.todo.status == 'Done' ? 'card__button-status_done' : 'card__button-status_undone') + (isDraggedOver ? ' card_pointer-switch' : '')}
                 onClick={doneHandler}>{props.todo.status}</button>
-            {isDraggedOver ? <div className='card__label'>→ PUT HERE ←</div> : ''}
+            {(replacedTodo == props.todo) && (isDragging == true) && <div className='card__label' style={positionCurTar ? { top: '125px' } : { top: '-33px' }}>→ HERE ←</div>}
         </div>
     )
 }

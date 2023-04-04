@@ -52,7 +52,6 @@ export function doneTodoThunk(payload: string) {
 export function reOrderTodoThunk(payload: { replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType }) {
     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
-        console.log('payload', payload)
         dispatch(reOrderTodo(payload))
         const state = getState().todos
         await APItodollo.sendData(`https://todollo-default-rtdb.firebaseio.com/todos.json`, state)

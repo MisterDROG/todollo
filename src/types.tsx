@@ -27,8 +27,9 @@ export type AppStatus = {
     status: null | string,
     error: null | string | undefined,
     draggedTodo: null | TodoType,
-    replacedTodo: null | TodoType
-    enteredBranch: null | BranchType
+    replacedTodo: null | TodoType,
+    enteredBranch: null | BranchType,
+    isDragging: true | false
 }
 
 export type APItodolloType = typeof APItodollo
