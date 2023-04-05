@@ -24,6 +24,7 @@ export const initialAppStatus: AppStatus = {
     draggedTodo: null,
     replacedTodo: null,
     enteredBranch: null,
-    isDragging: false
+    isDragging: false,
+    putCardToBottom: false
 }
 

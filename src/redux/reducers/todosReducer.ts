@@ -1,5 +1,4 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
-import { act } from "react-dom/test-utils"
 import { BranchType, TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
 import { initialTodos } from "../initialStates"
 import { getPostsThunk } from "../middlewares/thunks"
@@ -36,7 +35,9 @@ export const todoSlice = createSlice({
           break
       }
     },
-    reOrderTodo(state, action: PayloadAction<{ replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType }>) {
+    reOrderTodo(state, action: PayloadAction<{ replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType, putCardToBottom: true | false }>) {
+      const draggedOrder = action.payload.draggedTodo.order
+      const draggedBranch = action.payload.draggedTodo.branch
       const currentBranchTodos = current(state).filter(todo => todo.branch == action.payload.enteredBranch.branchCode)
       const dragoutedState = current(state).map(todo => {
         if (todo.branch == action.payload.draggedTodo.branch && todo.order > action.payload.draggedTodo.order) {
@@ -45,6 +46,7 @@ export const todoSlice = createSlice({
         }
         return todo
       })
+
       if (action.payload.replacedTodo == null) {
         return dragoutedState.map(todo => {
           if (todo.id == action.payload.draggedTodo.id && currentBranchTodos.length == 0) {
@@ -55,13 +57,15 @@ export const todoSlice = createSlice({
           return todo
         })
       }
-      const repalcedOrder = action.payload.replacedTodo.order
-      const draggedOrder = action.payload.draggedTodo.order
-      const repalcedBranch = action.payload.replacedTodo.branch
-      const draggedBranch = action.payload.draggedTodo.branch
+
       if (action.payload.draggedTodo.id == action.payload.replacedTodo.id) {
         return [...state]
       }
+
+      let repalcedOrder = action.payload.replacedTodo.order
+      action.payload.putCardToBottom ? repalcedOrder -= 0 : repalcedOrder -= 1
+      const repalcedBranch = action.payload.replacedTodo.branch
+
       const returnedState = dragoutedState.map(todo => {
         if (todo.branch == repalcedBranch && todo.order > repalcedOrder && todo.id !== action.payload.draggedTodo.id) {
           const newOrder = todo.order + 1

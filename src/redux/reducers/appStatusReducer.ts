@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TodoType } from "../../types";
+import { BranchType, TodoType } from "../../types";
 import { initialAppStatus } from "../initialStates";
 import { getPostsThunk } from "../middlewares/thunks";
 import { reOrderTodo } from "./todosReducer";
@@ -19,7 +19,14 @@ export const appStatusSlice = createSlice({
         },
         setIsDragging(state, action: PayloadAction<boolean>) {
             state.isDragging = action.payload
-        }
+        },
+        setPutCardToBottom(state, action: PayloadAction<boolean>) {
+            state.putCardToBottom = action.payload
+        },
+        setEnteredBranch(state, action: PayloadAction<BranchType>) {
+            state.enteredBranch = action.payload
+        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -41,4 +48,4 @@ export const appStatusSlice = createSlice({
     }
 })
 
-export const { setDraggedTodo, setReplacedTodo, setReplacedTodoNull, setIsDragging } = appStatusSlice.actions
+export const { setDraggedTodo, setReplacedTodo, setReplacedTodoNull, setIsDragging, setPutCardToBottom, setEnteredBranch } = appStatusSlice.actions

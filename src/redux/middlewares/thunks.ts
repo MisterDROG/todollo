@@ -49,7 +49,7 @@ export function doneTodoThunk(payload: string) {
     }
 }
 
-export function reOrderTodoThunk(payload: { replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType }) {
+export function reOrderTodoThunk(payload: { replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType, putCardToBottom: true | false }) {
     return async (dispatch: AppDispatch, getState: GetStateType, extraArgument: { APItodollo: APItodolloType }) => {
         const { APItodollo } = extraArgument
         dispatch(reOrderTodo(payload))

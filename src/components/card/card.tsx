@@ -1,6 +1,6 @@
 import { DragEvent, useState } from 'react'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
-import { setDraggedTodo, setIsDragging, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
+import { setDraggedTodo, setIsDragging, setPutCardToBottom, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
 import { TodoType, useAppDispatch, useAppSelector } from '../../types'
 import './card.scss'
 import clockDate from '../../images/clock_date.png';
@@ -14,8 +14,8 @@ function Card(props: CardProps) {
     const dispatch = useAppDispatch()
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
     const isDragging = useAppSelector(state => state.appStatus.isDragging)
+    const putCardToBottom = useAppSelector(state => state.appStatus.putCardToBottom)
     const [isDraggedOver, setIsDraggedOver] = useState(false)
-    const [positionCurTar, setPositionCurTar] = useState(false)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo))
@@ -47,11 +47,11 @@ function Card(props: CardProps) {
         const pageY = e.pageY
         const positionCurrentTarget = pageY - topCurrentTarget - heightCurrentTarget / 2
         if (positionCurrentTarget > 0) {
-            setPositionCurTar(true)
+            dispatch(setPutCardToBottom(true))
             e.currentTarget.style.marginBottom = "50px"
             e.currentTarget.style.marginTop = "10px"
         } else {
-            setPositionCurTar(false)
+            dispatch(setPutCardToBottom(false))
             e.currentTarget.style.marginTop = "50px"
             e.currentTarget.style.marginBottom = "10px"
         }
@@ -70,19 +70,18 @@ function Card(props: CardProps) {
             onDragOver={(e) => dragOverHandler(e, props.todo)}
             onDrop={(e) => dropHandler(e, props.todo)}
         >
-            <div className={'card__header' + (isDraggedOver ? ' card_pointer-switch' : '')}>
+            <div className={'card__header' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}>
                 <p className='card__text'>{props.todo.task}</p>
-                <button className={'card__button-delete' + (isDraggedOver ? ' card_pointer-switch' : '')} onClick={deleteHandler}>X</button>
+                <button className={'card__button-delete' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')} onClick={deleteHandler}>X</button>
             </div>
-
-            {/* <p className='card__order'>{props.todo.order}</p> */}
-            <div className={'card__info' + (isDraggedOver ? ' card_pointer-switch' : '')}>
+            <p className='card__order'>{props.todo.order}</p>
+            <div className={'card__info' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}>
                 <img className='card__logo-img' src={clockDate} alt='clockDate image'></img>
                 <p className='card__date'>{props.todo.date}</p>
             </div>
-            <button className={(props.todo.status == 'Done' ? 'card__button-status_done' : 'card__button-status_undone') + (isDraggedOver ? ' card_pointer-switch' : '')}
+            <button className={(props.todo.status == 'Done' ? 'card__button-status_done' : 'card__button-status_undone') + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}
                 onClick={doneHandler}>{props.todo.status}</button>
-            {(replacedTodo == props.todo) && (isDragging == true) && <div className='card__label' style={positionCurTar ? { top: '125px' } : { top: '-33px' }}>→ HERE ←</div>}
+            {(replacedTodo == props.todo) && (isDragging == true) && <div className='card__label' style={putCardToBottom ? { top: '125px' } : { top: '-33px' }}>→ HERE ←</div>}
         </div>
     )
 }

@@ -1,12 +1,12 @@
-import { DragEvent, useState } from 'react'
+import { DragEvent } from 'react'
 import React, { useMemo } from "react"
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { createTodoThunk, deleteTodoThunk, getPostsThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
+import { createTodoThunk, deleteTodoThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
 import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
 import { BranchType, TodoType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../types"
 import Card from "../card/card"
 import './branch.scss'
-import { setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
+import { setEnteredBranch, setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
 
 interface BranchProps {
     branch: BranchType,
@@ -16,11 +16,13 @@ function Branch(props: BranchProps) {
     const inputTodo = useInputChange('')
     const stateTodos = useAppSelector((state) => state.todos)
     const dispatch = useAppDispatch()
-    const [isCardOver, setIsCardOver] = useState(false)
     const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
 
     const draggedTodo = useAppSelector(state => state.appStatus.draggedTodo)
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
+    const putCardToBottom = useAppSelector(state => state.appStatus.putCardToBottom)
+    const enteredBranch = useAppSelector(state => state.appStatus.enteredBranch)
+    const isDragging = useAppSelector(state => state.appStatus.isDragging)
 
     const filteredTodos = useMemo(() => {
         const filteredTodos = stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
@@ -48,34 +50,27 @@ function Branch(props: BranchProps) {
     }
     function dragEnterHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
+        dispatch(setEnteredBranch(props.branch))
         if (e.target == e.currentTarget) {
             dispatch(setReplacedTodoNull(null))
         }
     }
 
-    function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
-        setIsCardOver(false)
-    }
-
     function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
-        setIsCardOver(true)
     }
 
     function dropHandler(e: DragEvent<HTMLDivElement>, branch: BranchType): void {
         e.preventDefault()
-        setIsCardOver(false)
-        dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch }))
+        dispatch(reOrderTodoThunk({ replacedTodo: replacedTodo as TodoType, draggedTodo: draggedTodo as TodoType, enteredBranch: branch, putCardToBottom: putCardToBottom }))
     }
 
     return (
         <div className="branch"
-            onDragLeave={(e) => dragLeaveHandler(e)}
-            onDragEnter={(e) => dragEnterHandler(e)}
-            onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropHandler(e, props.branch)}>
-            {/* <div className='branch-container' style={{ backgroundColor: `${isCardOver ? '#91a9ff' : ''}` }}> */}
-            <div className='branch-container'>
+            onDragEnterCapture={(e) => dragEnterHandler(e)}
+            onDragOverCapture={(e) => dragOverHandler(e)}
+            onDropCapture={(e) => dropHandler(e, props.branch)}>
+            <div className='branch-container' style={{ backgroundColor: `${(enteredBranch == props.branch) && isDragging ? '#91a9ff' : ''}` }}>
                 <div className="branch__name-container">
                     <p className="branch__name">{isLoadingDelete ? "Deleting..." : props.branch.branchName}</p>
                     <button className="branch__button-delete" onClick={handleDelete}>X</button>
