@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BranchArr, BranchType } from "../../types";
+import { BranchArr, BranchType } from "../../utils/generalTypes";
 
 export const branchApi = createApi({
     reducerPath: 'branchApi',

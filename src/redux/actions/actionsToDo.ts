@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { TodoType } from "../../types";
+import { TodoType } from "../../utils/generalTypes";
 import { CHANGE_STATUS_TODO, CREATE_TODO, DELETE_TODO } from "../types";
 
 // export function createTodo(todo: TodoType) {

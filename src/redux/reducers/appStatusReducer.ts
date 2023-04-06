@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BranchType, TodoType } from "../../types";
+import { BranchType, TodoType } from "../../utils/generalTypes";
 import { initialAppStatus } from "../initialStates";
 import { getPostsThunk } from "../middlewares/thunks";
 import { reOrderTodo } from "./todosReducer";

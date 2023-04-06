@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import Branch from "../branch/branch"
 import './branchHolder.scss'
 import { useInputChange } from "../../redux/customHooks/useInputChange"
-import { useAppDispatch, useAppSelector } from "../../types"
+import { useAppDispatch, useAppSelector } from "../../utils/generalTypes"
 import { getPostsThunk } from "../../redux/middlewares/thunks"
 import { useCreateBranchRTKMutation, useGetBranchesRTKQuery } from "../../redux/reducers/branchesReducer"
 import { initialBranches, initialTodos } from "../../redux/initialStates"

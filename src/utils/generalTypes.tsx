@@ -1,6 +1,8 @@
+import APItodollo from "./APItodollo";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { storeTodollo } from "./redux/store";
-import APItodollo from "./utils/APItodollo";
+import { storeTodollo } from "../redux/store";
+
+//all types for the application
 
 export const TODO_DONE = 'Done'
 export const TODO_UNDONE = 'unDone'
@@ -14,12 +16,12 @@ export type TodoType = {
     order: number
 }
 
-export type TodosArr = TodoType[]
-
 export type BranchType = {
     branchName: string,
     branchCode: string
 }
+
+export type TodosArr = TodoType[]
 
 export type BranchArr = BranchType[]
 
@@ -34,10 +36,6 @@ export type AppStatus = {
 }
 
 export type APItodolloType = typeof APItodollo
-
-export type addToDoType = (input: TodoType) => void
-
-export type addBranchType = (input: BranchType) => void
 
 export type GetStateType = typeof storeTodollo.getState
 

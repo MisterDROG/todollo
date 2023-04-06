@@ -1,14 +1,13 @@
-import { BranchArr, TodosArr } from "../types"
+import { BranchArr, TodosArr } from "./generalTypes"
+
+//API for get/send data to firebase database
 
 async function getData(url: string) {
     const response = await fetch(url, {
         method: 'GET'
     })
     const responseJSON = await response.json()
-    let result = Object.keys(responseJSON).map(key => {
-        return { ...responseJSON[key], id: key }
-    })
-    return result
+    return responseJSON
 }
 
 async function sendData(url: string, payload: TodosArr | BranchArr) {

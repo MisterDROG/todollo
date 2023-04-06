@@ -1,9 +1,9 @@
 import { DragEvent, useState } from 'react'
 import { deleteTodoThunk, doneTodoThunk } from '../../redux/middlewares/thunks'
 import { setDraggedTodo, setIsDragging, setPutCardToBottom, setReplacedTodo } from '../../redux/reducers/appStatusReducer'
-import { TodoType, useAppDispatch, useAppSelector } from '../../types'
+import { TodoType, useAppDispatch, useAppSelector } from '../../utils/generalTypes'
 import './card.scss'
-import clockDate from '../../images/clock_date.png';
+import clockDate from '../../images/clockDateImage.png';
 
 interface CardProps {
     todo: TodoType,

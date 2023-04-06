@@ -1,4 +1,4 @@
-import { AppStatus, BranchArr, TodosArr } from "../types";
+import { AppStatus, BranchArr, TodosArr } from "../utils/generalTypes";
 
 export const initialTodos: TodosArr = [
     { task: 'Loading...', date: 'loading...', branch: 'house', id: '1', status: 'unDone', order: 1 },

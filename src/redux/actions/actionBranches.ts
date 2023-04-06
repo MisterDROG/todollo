@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { BranchType } from "../../types";
+import { BranchType } from "../../utils/generalTypes";
 import { CREATE_BRANCH, DELETE_BRANCH } from "../types";
 
 // export function createBranch(branch: BranchType) {

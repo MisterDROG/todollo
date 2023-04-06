@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
 import APItodollo from "../utils/APItodollo";
+import { configureStore } from "@reduxjs/toolkit";
 import { loggerMiddleware } from "./middlewares/logger";
 import { appStatusSlice } from "./reducers/appStatusReducer";
 import { branchApi } from "./reducers/branchesReducer";
@@ -15,6 +15,5 @@ export const storeTodollo = configureStore({
         thunk: {
             extraArgument: { APItodollo },
         }
-        // }).concat(loggerMiddleware, branchApi.middleware)
-    }).concat(branchApi.middleware)
+    }).concat(loggerMiddleware, branchApi.middleware)
 })

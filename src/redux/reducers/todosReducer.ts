@@ -1,5 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
-import { BranchType, TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../types"
+import { BranchType, TodosArr, TodoType, TODO_DONE, TODO_UNDONE } from "../../utils/generalTypes"
 import { initialTodos } from "../initialStates"
 import { getPostsThunk } from "../middlewares/thunks"
 

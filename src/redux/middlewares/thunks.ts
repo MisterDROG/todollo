@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { APItodolloType, AppDispatch, BranchType, GetStateType, TodosArr, TodoType } from "../../types"
+import { APItodolloType, AppDispatch, BranchType, GetStateType, TodosArr, TodoType } from "../../utils/generalTypes"
 import { createTodo, deleteTodo, doneTodo, reOrderTodo } from "../reducers/todosReducer"
 
 export const getPostsThunk = createAsyncThunk<

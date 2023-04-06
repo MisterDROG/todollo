@@ -1,4 +1,4 @@
-import todolloLogo from '../../images/TodolloDark.png';
+import todolloLogo from '../../images/TodolloDarkLogo.png';
 import './header.scss'
 
 function Header() {
