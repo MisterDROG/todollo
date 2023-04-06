@@ -74,7 +74,7 @@ function Card(props: CardProps) {
                 <p className='card__text'>{props.todo.task}</p>
                 <button className={'card__button-delete' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')} onClick={deleteHandler}>X</button>
             </div>
-            <p className='card__order'>{props.todo.order}</p>
+            {/* <p className='card__order'>{props.todo.order}</p> */}
             <div className={'card__info' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}>
                 <img className='card__logo-img' src={clockDate} alt='clockDate image'></img>
                 <p className='card__date'>{props.todo.date}</p>

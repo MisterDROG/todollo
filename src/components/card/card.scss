@@ -1,12 +1,16 @@
+@import '../../utils/generalStyles.scss';
+
+//all styles for draggable cards
+
 .card {
-    border: none;
     position: relative;
-    border-radius: 5px;
-    background-color: white;
     margin: 10px 0px;
     padding: 10px;
+    background-color: white;
     cursor: grab;
-    box-shadow: 0px 0px 4px 0.1px grey;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0.1px $shadowThemeColor;
     transition: margin 0.1s ease-out;
 }
 
@@ -18,23 +22,23 @@
 .card__text {
     margin: 0px 10px 0px 0px;
     padding: 0px 0px 8px 0px;
-    font-weight: 500;
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
+    font-weight: 500;
 }
 
 .card__button-delete {
-    font-weight: bold;
     width: 20px;
     height: 20px;
+    background-color: $greyFunctionalColor;
     border: none;
     border-radius: 8px;
-    background-color: #cecdcd;
-}
+    font-weight: bold;
 
-.card__button-delete:hover {
-    background-color: #ff9191;
-    box-shadow: 0px 0px 5px 1px grey;
+    &:hover {
+        background-color: $redFunctionalColor;
+        @include elementShadow;
+    }
 }
 
 .card__order {
@@ -64,31 +68,33 @@
 }
 
 .card__button-status_undone {
-    font-weight: bold;
+
     width: 70px;
     height: 30px;
+    background-color: $greyFunctionalColor;
     border: none;
     border-radius: 8px;
-    background-color: #cecdcd;
-}
+    font-weight: bold;
 
-.card__button-status_undone:hover {
-    background-color: #93ff91;
-    box-shadow: 0px 0px 5px 1px grey;
+    &:hover {
+        background-color: $greenFunctionalColor;
+        @include elementShadow;
+    }
 }
 
 .card__button-status_done {
-    font-weight: bold;
+
     width: 70px;
     height: 30px;
+    background-color: $greenFunctionalColor;
     border: none;
     border-radius: 8px;
-    background-color: #93ff91;
-}
+    font-weight: bold;
 
-.card__button-status_done:hover {
-    background-color: #93ff91;
-    box-shadow: 0px 0px 5px 1px grey;
+    &:hover {
+        background-color: $greenFunctionalColor;
+        @include elementShadow;
+    }
 }
 
 .card_pointer-switch {
@@ -106,13 +112,13 @@
 }
 
 .card__label {
-    border-radius: 5px;
-    width: 80px;
-    left: calc(50% - 40px);
-    text-align: center;
-    font-weight: bold;
     position: absolute;
+    left: calc(50% - 40px);
+    width: 80px;
+    border-radius: 5px;
     pointer-events: none;
+    font-weight: bold;
+    text-align: center;
     animation-duration: 0.8s;
     animation-timing-function: linear;
     animation-name: opacityAnim;

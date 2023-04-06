@@ -1,3 +1,7 @@
+@import '../../utils/generalStyles.scss';
+
+//all styles for branches whitch are containers for draggable cards
+
 .branch {
     min-width: 260px;
     height: 100%;
@@ -13,11 +17,10 @@
     width: 240px;
     margin: 10px;
     padding: 10px;
-    background-color: #D2EFFF;
     box-sizing: border-box;
-    flex-direction: column;
+    background-color: $lightBlueThemeColor;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px 1px grey;
+    @include elementShadow;
 
     @media screen and (max-width: 400px) {
         width: auto;
@@ -37,19 +40,19 @@
 }
 
 .branch__button-delete {
-    margin: 0px 0px 0px 10px;
-    padding: 0px;
-    font-weight: bold;
     min-width: 25px;
     height: 25px;
+    margin: 0px 0px 0px 10px;
+    padding: 0px;
+    background-color: $greyFunctionalColor;
     border: none;
     border-radius: 8px;
-    background-color: #cecdcd;
-}
+    font-weight: bold;
 
-.branch__button-delete:hover {
-    background-color: #ff9191;
-    box-shadow: 0px 0px 5px 1px grey;
+    &:hover {
+        background-color: $redFunctionalColor;
+        @include elementShadow;
+    }
 }
 
 .branch__form-new-card {
@@ -63,10 +66,10 @@
 
 .branch__input-new-card {
     height: 20px;
-    border-radius: 5px;
-    border: 2px solid #cecdcd;
     width: 150px;
     margin: 0px 10px 0px 0px;
+    border: 2px solid $greyFunctionalColor;
+    border-radius: 5px;
 
     @media screen and (max-width: 400px) {
         width: 75%;
@@ -75,17 +78,16 @@
 
 .branch__button-add-card {
     flex: 0 0 auto;
-    font-weight: bold;
     width: 50px;
     height: 25px;
-    font-size: 15px;
+    background-color: $greyFunctionalColor;
     border: none;
-    background-color: #cecdcd;
     border-radius: 8px;
-    padding: 0px 10px;
-}
+    font-size: 15px;
+    font-weight: bold;
 
-.branch__button-add-card:hover {
-    background-color: #91a9ff;
-    box-shadow: 0px 0px 5px 1px grey;
+    &:hover {
+        background-color: $blueFunctionalColor;
+        @include elementShadow;
+    }
 }

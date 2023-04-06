@@ -1,0 +1,16 @@
+//general style SCSS variables and mixins for whole application
+
+$redFunctionalColor: #ff9191;
+$blueFunctionalColor: #91a9ff;
+$greenFunctionalColor: #93ff91;
+$greyFunctionalColor: #cecdcd;
+$alertFunctionalColor: red;
+
+$lightBlueThemeColor: #D2EFFF;
+$blueThemeColor: #00A3FF;
+$darkBlueThemeColor: blue;
+$shadowThemeColor: grey;
+
+@mixin elementShadow {
+    box-shadow: 0px 0px 5px 1px $shadowThemeColor;
+}

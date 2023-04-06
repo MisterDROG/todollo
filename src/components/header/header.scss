@@ -1,13 +1,16 @@
-.header {
-    width: 100%;
-    padding: 10px 0px;
-    position: fixed;
-    height: 50px;
-    box-sizing: border-box;
-    background: linear-gradient(90deg, blue, #00A3FF);
-    z-index: 1;
-}
+@import '../../utils/generalStyles.scss';
 
+//all styles for header
+
+.header {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 50px;
+    padding: 10px 0px;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, $darkBlueThemeColor, $blueThemeColor);
+}
 
 .header__logo-container {
     display: flex;
@@ -16,10 +19,9 @@
 }
 
 .header__logo-img {
-    margin: 0px 10px;
     width: 30px;
     height: 30px;
-
+    margin: 0px 10px;
 }
 
 .header__logo-text {

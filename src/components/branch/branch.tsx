@@ -67,9 +67,9 @@ function Branch(props: BranchProps) {
 
     return (
         <div className="branch"
-            onDragEnterCapture={(e) => dragEnterHandler(e)}
-            onDragOverCapture={(e) => dragOverHandler(e)}
-            onDropCapture={(e) => dropHandler(e, props.branch)}>
+            onDragEnter={(e) => dragEnterHandler(e)}
+            onDragOver={(e) => dragOverHandler(e)}
+            onDrop={(e) => dropHandler(e, props.branch)}>
             <div className='branch-container' style={{ backgroundColor: `${(enteredBranch == props.branch) && isDragging ? '#91a9ff' : ''}` }}>
                 <div className="branch__name-container">
                     <p className="branch__name">{isLoadingDelete ? "Deleting..." : props.branch.branchName}</p>
