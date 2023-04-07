@@ -1,11 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { BranchArr, BranchType } from "../../utils/generalTypes";
 
+//crateApi for branch reducers
+
+//for branches used Query istead of slices for easy control of loading status and cache control (in future todos slice also should be transfered)
+//for cache control invalidating tags are used
 export const branchApi = createApi({
     reducerPath: 'branchApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://todollo-default-rtdb.firebaseio.com/' }),
     tagTypes: ['Branches'],
     endpoints: (builder) => ({
+        //get all branches query
         getBranchesRTK: builder.query<BranchArr, void>({
             query: () => 'branches.json',
             transformResponse: (response: any) => Object.keys(response).map((key) => {
@@ -20,6 +25,7 @@ export const branchApi = createApi({
                 :
                 [{ type: 'Branches', id: 'LIST' }],
         }),
+        //create branch mutation
         createBranchRTK: builder.mutation<void, BranchType>({
             query: (branch) => ({
                 url: 'branches.json',
@@ -28,6 +34,7 @@ export const branchApi = createApi({
             }),
             invalidatesTags: [{ type: 'Branches', id: 'LIST' }]
         }),
+        //delete branch mutation
         deleteBranchRTK: builder.mutation<void, string>({
             query: (branchCode) => ({
                 url: `branches/${branchCode}.json`,
@@ -40,45 +47,4 @@ export const branchApi = createApi({
 })
 
 export const { useGetBranchesRTKQuery, useCreateBranchRTKMutation, useDeleteBranchRTKMutation } = branchApi
-
-// export function branchReducer(state: BranchArr = initialBranches, action: any) {
-//     switch (action.type) {
-//         case CREATE_BRANCH:
-//             return [...state, action.payload]
-//         case DELETE_BRANCH:
-//             return state.filter((branch) => branch.branchCode !== action.payload)
-//         default: return state
-//     }
-// }
-
-// export const branchReducer = createReducer(initialBranches, (builder) => {
-//     builder
-//         .addCase(createBranch, (state, action) => [...state, action.payload])
-//         .addCase(deleteBranch, (state, action) => state.filter((branch) => branch.branchCode !== action.payload))
-//         .addDefaultCase((state, action) => state)
-// })
-
-// export const branchSlice = createSlice({
-//     name: 'branchSlice',
-//     initialState: initialBranches,
-//     reducers: {
-//         getAllBranches(state, action: PayloadAction<BranchArr>) {
-//             return action.payload
-//         },
-//         createBranch(state, action: PayloadAction<BranchType>) {
-//             state.push(action.payload)
-//         },
-//         deleteBranch(state, action: PayloadAction<string>) {
-//             state.splice(state.findIndex(((branch) => branch.branchCode === action.payload)), 1)
-//         }
-//     },
-//     extraReducers: (builder) => {
-//         builder
-//             .addCase(getBranchesThunk.fulfilled, (state, action: PayloadAction<BranchArr>) => {
-//                 state = action.payload
-//             })
-//     }
-// })
-
-// export const { getAllBranches, createBranch, deleteBranch } = branchSlice.actions
 

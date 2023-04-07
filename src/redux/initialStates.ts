@@ -1,5 +1,8 @@
 import { AppStatus, BranchArr, TodosArr } from "../utils/generalTypes";
 
+// module for all initial states of the app
+
+//initial states for todos reducer (uses as preloading state)
 export const initialTodos: TodosArr = [
     { task: 'Loading...', date: 'loading...', branch: 'house', id: '1', status: 'unDone', order: 1 },
     { task: 'Loading...', date: 'loading...', branch: 'house', id: '2', status: 'unDone', order: 2 },
@@ -12,12 +15,15 @@ export const initialTodos: TodosArr = [
     { task: 'Loading...', date: 'loading...', branch: 'sport', id: '9', status: 'unDone', order: 9 },
 ]
 
+//initial states for branches reducer (uses as preloading state)
 export const initialBranches: BranchArr = [
     { branchName: 'Loading...', branchCode: 'house' },
     { branchName: 'Loading...', branchCode: 'work' },
     { branchName: 'Loading...', branchCode: 'sport' },
 ]
 
+//initial states for app status reducer 
+//The purpose of all variables is described in the module with the application status slice
 export const initialAppStatus: AppStatus = {
     status: null,
     error: null,

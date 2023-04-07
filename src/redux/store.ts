@@ -5,6 +5,9 @@ import { appStatusSlice } from "./reducers/appStatusReducer";
 import { branchApi } from "./reducers/branchesReducer";
 import { todoSlice } from "./reducers/todosReducer";
 
+//store for contor states of app status, todos, branches
+//API connected with extra argument of middleware
+
 export const storeTodollo = configureStore({
     reducer: {
         todos: todoSlice.reducer,

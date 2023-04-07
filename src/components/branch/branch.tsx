@@ -1,6 +1,6 @@
 import { DragEvent } from 'react'
 import React, { useMemo } from "react"
-import { useInputChange } from "../../redux/customHooks/useInputChange"
+import { useInputChange } from "../../utils/customHooks/useInputChange"
 import { createTodoThunk, deleteTodoThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
 import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
 import { BranchType, TodoType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../utils/generalTypes"
