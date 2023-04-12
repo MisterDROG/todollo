@@ -5,7 +5,6 @@ import { getPostsThunk } from "../middlewares/thunks"
 
 //slice for todos reducers
 
-
 export const todoSlice = createSlice({
   name: 'todoSlice',
   initialState: initialTodos,
@@ -44,6 +43,7 @@ export const todoSlice = createSlice({
     //action payload variables match variables in app status state
     //(strongly need refactoring and encapsulation of logic according to SOLID, currently in develop)
     reOrderTodo(state, action: PayloadAction<{ replacedTodo: TodoType | null, draggedTodo: TodoType, enteredBranch: BranchType, putCardToBottom: true | false }>) {
+
       //setting variables for action.payload variables: current dragging card, current entering branch
       const draggedOrder = action.payload.draggedTodo.order
       const draggedBranch = action.payload.draggedTodo.branch
@@ -90,13 +90,13 @@ export const todoSlice = createSlice({
 
       //assigning new locations to all cards and sending to the state. Six cases are considered:
       return dragoutedState.map(todo => {
-        //case 1: the card is not dragged and not replaced but stands below the replaced card in the branch where the dragged card is moved
-        if (todo.branch == repalcedBranch && todo.order > repalcedOrder && todo.id !== action.payload.draggedTodo.id) {
+        //case 1: the card is replaced and the dragged card is moved to the same branch where it was before from top to bottom
+        if (todo.branch == repalcedBranch && repalcedBranch == draggedBranch && draggedOrder < repalcedOrder && todo.order == repalcedOrder) {
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
         }
-        //case 2: the card is replaced and the dragged card is transferred to the same branch where it was before from top to bottom
-        else if (todo.branch == repalcedBranch && repalcedBranch == draggedBranch && draggedOrder < repalcedOrder && todo.order == repalcedOrder) {
+        //case 2: the card is not dragged and stands below the new position of dragged card
+        else if (todo.id !== action.payload.draggedTodo.id && todo.branch == repalcedBranch && todo.order > repalcedOrder) {
           const newOrder = todo.order + 1
           return { ...todo, order: newOrder }
         }
@@ -115,7 +115,7 @@ export const todoSlice = createSlice({
           const newOrder = repalcedOrder
           return { ...todo, order: newOrder, branch: enteredBranch }
         }
-        //case 6: card does not participate in movements
+        //case 6: card does not changes its order
         return todo
       })
     },

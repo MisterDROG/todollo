@@ -1,11 +1,11 @@
-import { DragEvent } from 'react'
+import './branch.scss'
+import Card from "../card/card"
 import React, { useMemo } from "react"
+import { DragEvent } from 'react'
 import { useInputChange } from "../../utils/customHooks/useInputChange"
 import { createTodoThunk, deleteTodoThunk, reOrderTodoThunk } from "../../redux/middlewares/thunks"
 import { useDeleteBranchRTKMutation } from "../../redux/reducers/branchesReducer"
 import { BranchType, TodoType, TODO_UNDONE, useAppDispatch, useAppSelector } from "../../utils/generalTypes"
-import Card from "../card/card"
-import './branch.scss'
 import { setEnteredBranch, setReplacedTodoNull } from '../../redux/reducers/appStatusReducer'
 
 interface BranchProps {

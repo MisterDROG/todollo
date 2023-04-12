@@ -1,9 +1,7 @@
-import todolloLogo from '../../images/TodolloDarkLogo.png';
 import './header.scss'
+import todolloLogo from '../../images/TodolloDarkLogo.png';
 
 function Header() {
-
-
     return (
         <div className="header">
             <div className="header__logo-container">
