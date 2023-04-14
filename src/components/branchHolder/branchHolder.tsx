@@ -21,11 +21,12 @@ function BranchHolder() {
 
 
     useEffect(() => {
+        //first load of cards
         dispatch(getPostsThunk())
     }, [])
 
 
-    function handleSubmitCreateBranch(event: React.FormEvent) {
+    function handleCreateBranch(event: React.FormEvent) {
         event.preventDefault()
         if (inputBranch.value.trim().length !== 0) {
             createBranchRTK({
@@ -47,7 +48,7 @@ function BranchHolder() {
             })}
             {isLoadingCreate && <Branch branch={{ branchName: 'Loading...', branchCode: 'Loading' }} />}
             {!stateAppStatus.error &&
-                <form className="branch-holder__form-new-branch" onSubmit={handleSubmitCreateBranch}>
+                <form className="branch-holder__form-new-branch" onSubmit={handleCreateBranch}>
                     <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
                     <button className="branch-holder__button-add-branch">Add</button>
                 </form>}

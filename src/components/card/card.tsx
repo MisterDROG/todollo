@@ -9,12 +9,15 @@ interface CardProps {
     todo: TodoType,
 }
 
+//element for cards
+
 function Card(props: CardProps) {
 
     const dispatch = useAppDispatch()
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
     const isDragging = useAppSelector(state => state.appStatus.isDragging)
     const putCardToBottom = useAppSelector(state => state.appStatus.putCardToBottom)
+
     const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false)
 
     function deleteHandler() {
@@ -57,7 +60,7 @@ function Card(props: CardProps) {
         }
     }
 
-    function dropHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+    function dropHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
     }
 
@@ -68,7 +71,7 @@ function Card(props: CardProps) {
             onDragEnter={(e) => dragEnterHandler(e, props.todo)}
             onDragLeave={(e) => dragLeaveHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropHandler(e, props.todo)}
+            onDrop={(e) => dropHandler(e)}
         >
             <div className={'card__header' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}>
                 <p className='card__text'>{props.todo.task}</p>

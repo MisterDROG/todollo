@@ -12,29 +12,35 @@ interface BranchProps {
     branch: BranchType,
 }
 
-function Branch(props: BranchProps) {
-    const inputTodo = useInputChange('')
-    const stateTodos = useAppSelector((state) => state.todos)
-    const dispatch = useAppDispatch()
-    const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
+//element for handling cards and its creating input
 
+function Branch(props: BranchProps) {
+
+    const dispatch = useAppDispatch()
+    const stateTodos = useAppSelector((state) => state.todos)
     const draggedTodo = useAppSelector(state => state.appStatus.draggedTodo)
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
     const putCardToBottom = useAppSelector(state => state.appStatus.putCardToBottom)
     const enteredBranch = useAppSelector(state => state.appStatus.enteredBranch)
     const isDragging = useAppSelector(state => state.appStatus.isDragging)
 
+    const inputTodo = useInputChange('')
+
+    const [deleteBranchRTK, { isError: isErrorDelete, isLoading: isLoadingDelete }] = useDeleteBranchRTKMutation()
+
+    //useMemo for prevent rerender
     const filteredTodos = useMemo(() => {
         const filteredTodos = stateTodos.filter((todo) => todo.branch == props.branch.branchCode)
         return filteredTodos.sort((a, b) => a.order - b.order)
     }, [stateTodos])
 
-    function handleDelete() {
+    function handleDeleteBranch() {
+        //first delete all todos in the branch then delete branch
         filteredTodos.forEach((todo) => dispatch(deleteTodoThunk(todo)))
         deleteBranchRTK(props.branch.branchCode)
     }
 
-    function handleSubmit(event: React.FormEvent) {
+    function handleCreateTodo(event: React.FormEvent) {
         event.preventDefault()
         if (inputTodo.value.trim().length !== 0) {
             dispatch(createTodoThunk({
@@ -48,6 +54,7 @@ function Branch(props: BranchProps) {
             inputTodo.setValue('')
         }
     }
+
     function dragEnterHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
         dispatch(setEnteredBranch(props.branch))
@@ -73,12 +80,12 @@ function Branch(props: BranchProps) {
             <div className='branch-container' style={{ backgroundColor: `${(enteredBranch == props.branch) && isDragging ? '#91a9ff' : ''}` }}>
                 <div className="branch__name-container">
                     <p className="branch__name">{isLoadingDelete ? "Deleting..." : props.branch.branchName}</p>
-                    <button className="branch__button-delete" onClick={handleDelete}>X</button>
+                    <button className="branch__button-delete" onClick={handleDeleteBranch}>X</button>
                 </div>
                 {filteredTodos && filteredTodos.map((todo) => {
                     return <Card todo={todo} key={todo.id} />
                 })}
-                <form className="branch__form-new-card" onSubmit={handleSubmit}>
+                <form className="branch__form-new-card" onSubmit={handleCreateTodo}>
                     <input className="branch__input-new-card" type='text' placeholder="New Task..." onChange={inputTodo.onChange} value={inputTodo.value} />
                     <button className="branch__button-add-card">Add</button>
                 </form>
