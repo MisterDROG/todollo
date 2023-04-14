@@ -7,23 +7,25 @@ import { getPostsThunk } from "../../redux/middlewares/thunks"
 import { useCreateBranchRTKMutation, useGetBranchesRTKQuery } from "../../redux/reducers/branchesReducer"
 import { initialBranches } from "../../redux/initialStates"
 
-interface BranchHolderProps {
-}
+//element for handling branches with todos
 
-function BranchHolder(props: BranchHolderProps) {
+function BranchHolder() {
+
+    const dispatch = useAppDispatch()
+    const stateAppStatus = useAppSelector((state) => state.appStatus)
 
     const inputBranch = useInputChange('')
-    const stateAppStatus = useAppSelector((state) => state.appStatus)
-    const { data: branchesRTK, error, isLoading: isLoadingGet } = useGetBranchesRTKQuery()
-    const [createBranchRTK, { isError: isErrorCreate, isLoading: isLoadingCreate }] = useCreateBranchRTKMutation()
-    const dispatch = useAppDispatch()
+
+    const { data: branchesRTK, isLoading: isLoadingGet } = useGetBranchesRTKQuery()
+    const [createBranchRTK, { isLoading: isLoadingCreate }] = useCreateBranchRTKMutation()
+
 
     useEffect(() => {
         dispatch(getPostsThunk())
     }, [])
 
 
-    function handleSubmit(event: React.FormEvent) {
+    function handleSubmitCreateBranch(event: React.FormEvent) {
         event.preventDefault()
         if (inputBranch.value.trim().length !== 0) {
             createBranchRTK({
@@ -44,10 +46,11 @@ function BranchHolder(props: BranchHolderProps) {
                 return <Branch key={branch.branchCode} branch={branch} />
             })}
             {isLoadingCreate && <Branch branch={{ branchName: 'Loading...', branchCode: 'Loading' }} />}
-            {!stateAppStatus.error && <form className="branch-holder__form-new-branch" onSubmit={handleSubmit}>
-                <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
-                <button className="branch-holder__button-add-branch">Add</button>
-            </form>}
+            {!stateAppStatus.error &&
+                <form className="branch-holder__form-new-branch" onSubmit={handleSubmitCreateBranch}>
+                    <input className="branch-holder__input-new-branch" type='text' placeholder="New Branch..." onChange={inputBranch.onChange} value={inputBranch.value} />
+                    <button className="branch-holder__button-add-branch">Add</button>
+                </form>}
         </div>
     )
 }

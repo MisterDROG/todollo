@@ -15,7 +15,7 @@ function Card(props: CardProps) {
     const replacedTodo = useAppSelector(state => state.appStatus.replacedTodo)
     const isDragging = useAppSelector(state => state.appStatus.isDragging)
     const putCardToBottom = useAppSelector(state => state.appStatus.putCardToBottom)
-    const [isDraggedOver, setIsDraggedOver] = useState(false)
+    const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false)
 
     function deleteHandler() {
         dispatch(deleteTodoThunk(props.todo))
@@ -30,7 +30,7 @@ function Card(props: CardProps) {
         dispatch(setDraggedTodo(todo))
     }
 
-    function dragLeaveHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+    function dragLeaveHandler(e: DragEvent<HTMLDivElement>): void {
         setIsDraggedOver(false)
     }
 
@@ -40,7 +40,7 @@ function Card(props: CardProps) {
         setIsDraggedOver(true)
     }
 
-    function dragOverHandler(e: DragEvent<HTMLDivElement>, todo: TodoType): void {
+    function dragOverHandler(e: DragEvent<HTMLDivElement>): void {
         e.preventDefault()
         const heightCurrentTarget = e.currentTarget.getBoundingClientRect().height
         const topCurrentTarget = e.currentTarget.getBoundingClientRect().top
@@ -66,8 +66,8 @@ function Card(props: CardProps) {
             draggable={true}
             onDragStart={(e) => dragStartHandler(e, props.todo)}
             onDragEnter={(e) => dragEnterHandler(e, props.todo)}
-            onDragLeave={(e) => dragLeaveHandler(e, props.todo)}
-            onDragOver={(e) => dragOverHandler(e, props.todo)}
+            onDragLeave={(e) => dragLeaveHandler(e)}
+            onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, props.todo)}
         >
             <div className={'card__header' + ((isDraggedOver && isDragging) ? ' card_pointer-switch' : '')}>
