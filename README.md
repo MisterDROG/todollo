@@ -2,6 +2,10 @@ This application is analog of the Trello task scheduler.
 
 ![Demonstration Gif](https://github.com/MisterDROG/todollo/blob/master/src/images/DemonstrationGif.gif)
 
+Short video presentation:
+
+https://disk.yandex.ru/i/lDwJOfRaPUH0Yw
+
 The main goal when writing was to make an application that supports the basic functions of the prototype and copying the style for an easy transition from Trello. From a code point of view, the goal was for the code to be up-to-date with modern front-end development techniques. At the moment, I myself use this application for compiling my to-do list board.
 
 The operation of the application is based on the following system:

@@ -1,6 +1,7 @@
 import { BranchArr, TodosArr } from "./generalTypes"
 
 //API for get/send data to firebase database
+//current API https://console.firebase.google.com/u/0/project/todollo/database/todollo-default-rtdb/data
 
 async function getData(url: string) {
     const response = await fetch(url, {
