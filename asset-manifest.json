@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/PortfolioDrog/todollo/static/css/main.90c38fcd.css",
-    "main.js": "/PortfolioDrog/todollo/static/js/main.40c9dd4e.js",
-    "static/media/clockDateImage.png": "/PortfolioDrog/todollo/static/media/clockDateImage.7d59a0d26e46a7b1c6ae.png",
-    "index.html": "/PortfolioDrog/todollo/index.html",
-    "main.90c38fcd.css.map": "/PortfolioDrog/todollo/static/css/main.90c38fcd.css.map",
-    "main.40c9dd4e.js.map": "/PortfolioDrog/todollo/static/js/main.40c9dd4e.js.map"
+    "main.css": "/todollo/static/css/main.90c38fcd.css",
+    "main.js": "/todollo/static/js/main.0ff67e2f.js",
+    "static/media/clockDateImage.png": "/todollo/static/media/clockDateImage.7d59a0d26e46a7b1c6ae.png",
+    "index.html": "/todollo/index.html",
+    "main.90c38fcd.css.map": "/todollo/static/css/main.90c38fcd.css.map",
+    "main.0ff67e2f.js.map": "/todollo/static/js/main.0ff67e2f.js.map"
   },
   "entrypoints": [
     "static/css/main.90c38fcd.css",
-    "static/js/main.40c9dd4e.js"
+    "static/js/main.0ff67e2f.js"
   ]
 }
