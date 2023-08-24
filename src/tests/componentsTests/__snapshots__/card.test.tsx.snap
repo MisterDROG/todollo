@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Card tests Is cards renders 1`] = `
+exports[`Card tests Is cards renders right 1`] = `
 <div>
   <div
     class="card"
@@ -36,9 +36,9 @@ exports[`Card tests Is cards renders 1`] = `
       </p>
     </div>
     <button
-      class="card__button-status_undone"
+      class="card__button-status_done"
     >
-      unDone
+      Done
     </button>
   </div>
 </div>

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Branch tests Is branch renders right 1`] = `
+<div>
+  <div
+    class="branch"
+  >
+    <div
+      class="branch-container"
+    >
+      <div
+        class="branch__name-container"
+      >
+        <p
+          class="branch__name"
+        >
+          House
+        </p>
+        <button
+          class="branch__button-delete"
+        >
+          X
+        </button>
+      </div>
+      <form
+        class="branch__form-new-card"
+      >
+        <input
+          class="branch__input-new-card"
+          placeholder="New Task..."
+          type="text"
+          value=""
+        />
+        <button
+          class="branch__button-add-card"
+        >
+          Add
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

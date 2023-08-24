@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header tests Is header renders right 1`] = `
+<div>
+  <div
+    class="header"
+  >
+    <div
+      class="header__logo-container"
+    >
+      <img
+        alt="ToDollo Logo"
+        class="header__logo-img"
+        src="TodolloDarkLogo.png"
+      />
+      <p
+        class="header__logo-text"
+      >
+        ToDollo board
+      </p>
+    </div>
+  </div>
+</div>
+`;
