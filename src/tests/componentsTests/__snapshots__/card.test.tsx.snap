@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card tests Is cards renders 1`] = `
+<div>
+  <div
+    class="card"
+    draggable="true"
+    style="margin-top: 10px; margin-bottom: 10px;"
+  >
+    <div
+      class="card__header"
+    >
+      <p
+        class="card__text"
+      >
+        Write program
+      </p>
+      <button
+        class="card__button-delete"
+      >
+        X
+      </button>
+    </div>
+    <div
+      class="card__info"
+    >
+      <img
+        alt="clockDate image"
+        class="card__logo-img"
+        src="clockDateImage.png"
+      />
+      <p
+        class="card__date"
+      >
+        11.03.22
+      </p>
+    </div>
+    <button
+      class="card__button-status_undone"
+    >
+      unDone
+    </button>
+  </div>
+</div>
+`;

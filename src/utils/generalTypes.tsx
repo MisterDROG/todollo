@@ -37,6 +37,8 @@ export type AppStatus = {
 
 export type APItodolloType = typeof APItodollo
 
+export type AppStore = typeof storeTodollo
+
 export type GetStateType = typeof storeTodollo.getState
 
 export type RootState = ReturnType<typeof storeTodollo.getState>
