@@ -11,6 +11,8 @@ import type { AppStore, RootState } from '../../utils/generalTypes'
 import { todoSlice } from "../../redux/reducers/todosReducer"
 import { appStatusSlice } from "../../redux/reducers/appStatusReducer"
 import { branchApi } from "../../redux/reducers/branchesReducer"
+import APItodollo from '../../utils/APItodollo'
+import { loggerMiddleware } from '../../redux/middlewares/logger'
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -29,7 +31,13 @@ export function renderWithProviders(
                 todos: todoSlice.reducer,
                 [branchApi.reducerPath]: branchApi.reducer,
                 appStatus: appStatusSlice.reducer
-            }, preloadedState
+            },
+            middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+                thunk: {
+                    extraArgument: { APItodollo },
+                }
+            }).concat(loggerMiddleware, branchApi.middleware),
+            preloadedState
         }),
         ...renderOptions
     }: ExtendedRenderOptions = {}

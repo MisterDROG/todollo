@@ -34,4 +34,4 @@ describe('Branch tests', () => {
         userEvent.type(inputNewCard, 'Test Card')
         expect(screen.getByRole('textbox')).toHaveValue('Test Card')
     })
-})
+}) 
