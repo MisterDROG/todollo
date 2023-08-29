@@ -34,6 +34,7 @@ Technologies used in writing:
 - Redux Toolkit
 - Redux Query
 - Firebase database
+- Jest for testing
 
 Additionally written:
 - Middleware for logging the store (similar to Redux DevTools)
